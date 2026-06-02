@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Boerschappen B2C ketenflow v0.2</title>
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+mermaid.initialize({
+  startOnLoad:false, theme:"base",
+  themeVariables:{
+    fontFamily:"Inter, Outfit, system-ui, sans-serif", primaryColor:"#FFFFEF", primaryTextColor:"#3C332F",
+    primaryBorderColor:"#A4B08B", lineColor:"#80885E", secondaryColor:"#DCEBCF",
+    tertiaryColor:"#FFDCB8", background:"#FFFFFF", mainBkg:"#FFFFEF", secondBkg:"#DCEBCF",
+    tertiaryBkg:"#FFDCB8", clusterBkg:"#FFFFFF", clusterBorder:"#E0A69F", edgeLabelBackground:"#FFFFFF"
+  },
+  flowchart:{ htmlLabels:true, curve:"basis" }
+});
+async function renderActiveDiagram(){
+  const activePanel=document.querySelector(".tab-panel.active");
+  if(!activePanel) return;
+  const container=activePanel.querySelector(".mermaid-output");
+  const source=activePanel.querySelector(".mermaid-source");
+  if(!container||!source||container.dataset.rendered==="true") return;
+  const diagramId="diagram-"+activePanel.id;
+  const {svg}=await mermaid.render(diagramId, source.textContent.trim());
+  container.innerHTML=svg; container.dataset.rendered="true";
+}
+window.addEventListener("DOMContentLoaded", async()=>{
+  const tabs=document.querySelectorAll("[data-tab]");
+  const panels=document.querySelectorAll(".tab-panel");
+  tabs.forEach(tab=>tab.addEventListener("click", async()=>{
+    const target=tab.dataset.tab;
+    tabs.forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
+    panels.forEach(panel=>{panel.classList.remove("active");panel.hidden=true;});
+    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
+    const panel=document.getElementById(target); panel.hidden=false; panel.classList.add("active");
+    await renderActiveDiagram();
+  }));
+  await renderActiveDiagram();
+});
+</script>
+<style>
+:root{--bodem:#3C332F;--fauna:#E0A69F;--flora:#80885E;--zand:#FFFFEF;--wit:#FFFFFF;--groen-licht:#DCEBCF;--groen:#A4B08B;--groen-donker:#505A3D;--roze-licht:#FFDCB8;--radius:16px;--shadow:0 12px 32px rgba(60,51,47,.08);}
+*{box-sizing:border-box} body{margin:0;color:var(--bodem);background:linear-gradient(180deg,var(--zand),#fff);font-family:Inter,Outfit,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+.page{width:min(1320px,calc(100vw - 32px));margin:0 auto;padding:32px 0 56px} header{display:grid;gap:12px;margin-bottom:24px}
+.eyebrow{color:var(--flora);font-size:14px;font-weight:700;letter-spacing:.03em;text-transform:uppercase} h1{margin:0;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.04em}
+.intro{max-width:980px;margin:0;color:rgba(60,51,47,.78);font-size:17px} .tabs{display:flex;flex-wrap:wrap;gap:8px;padding:8px;margin:24px 0;background:rgba(255,255,255,.74);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);position:sticky;top:12px;z-index:10;backdrop-filter:blur(10px)}
+.tab{appearance:none;border:0;border-radius:999px;padding:10px 14px;color:var(--bodem);background:transparent;cursor:pointer;font:inherit;font-weight:700;font-size:14px;transition:background .15s ease,transform .15s ease} .tab:hover{background:var(--groen-licht);transform:translateY(-1px)} .tab.active{color:var(--zand);background:var(--groen-donker)}
+.tab-panel{display:none} .tab-panel.active{display:grid;gap:18px} .card{background:var(--wit);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);overflow:hidden}
+.card-header{display:grid;gap:8px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:rgba(220,235,207,.38)} h2{margin:0;font-size:clamp(24px,3vw,36px);letter-spacing:-.03em;line-height:1.1} .card-header p{margin:0;color:rgba(60,51,47,.74)}
+.diagram-wrap{width:100%;overflow:auto;padding:24px;background:radial-gradient(circle at 20px 20px,rgba(128,136,94,.08) 2px,transparent 0) 0 0/28px 28px,#fff} .mermaid-output{min-width:880px} .notes{display:grid;gap:12px;padding:20px 24px 24px;background:#fff} .notes h3{margin:0;font-size:18px} .notes ul{margin:0;padding-left:18px;color:rgba(60,51,47,.82)} .notes li+li{margin-top:6px} .open-point{padding:14px 16px;border-radius:var(--radius);background:var(--roze-licht);font-weight:650} .mermaid-source{display:none} footer{margin-top:28px;color:rgba(60,51,47,.55);font-size:13px}
+@media(max-width:720px){.page{width:min(100vw - 20px,1320px);padding-top:20px}.tabs{position:static}.tab{flex:1 1 auto}.card-header,.notes,.diagram-wrap{padding-inline:16px}}
+</style>
+</head>
+<body>
+<main class="page">
+<header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.2</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen. Deze versie scheidt de prognosegedreven keten van de daadwerkelijke orderketen. Odoo bepaalt eerst boxinhoud, receptuur en prognosebehoefte. Shopify + JUO initiëren later de klantorders. Orders slokken uiteindelijk de prognosevoorraad op.</p></header>
+<nav class="tabs" role="tablist" aria-label="B2C keten diagrammen"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button>
+<button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button>
+<button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button>
+<button class="tab " data-tab="orderverwerking" role="tab" aria-selected="false">3. Odoo order</button>
+<button class="tab " data-tab="prognoseinkoop" role="tab" aria-selected="false">4. Prognose & inkoop</button>
+<button class="tab " data-tab="voorraadreservering" role="tab" aria-selected="false">5. Voorraadreservering</button>
+<button class="tab " data-tab="productieplanning" role="tab" aria-selected="false">6. Productieplanning</button>
+<button class="tab " data-tab="ijsvogel" role="tab" aria-selected="false">7. IJsVogel</button>
+<button class="tab " data-tab="terugkoppeling" role="tab" aria-selected="false">8. Odoo terugkoppeling</button>
+<button class="tab " data-tab="lastmile" role="tab" aria-selected="false">9. Last mile</button></nav>
+<section id="overview" class="tab-panel active" role="tabpanel" >
+  <article class="card">
+    <div class="card-header"><h2>Overkoepelende volgorde</h2><p>Prognoseflow en daadwerkelijke orderflow naast elkaar, maar logisch opvolgend.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart LR
+  A["1. Odoo<br/>Boxinhoud & recepten"] --> B["4. Odoo<br/>Prognosemodule & inkoop"]
+  C["2. Shopify + JUO<br/>Orderinitiatie"] --> D["3. Odoo<br/>Orderverwerking"]
+  A --> D
+  B --> E["5. Odoo<br/>Voorraadreservering per productiedag"]
+  D --> E
+  E --> F["6. Odoo<br/>Productieplanning"]
+  F --> G["7. IJsVogel<br/>Boxen vullen"]
+  G --> H["8. Odoo<br/>Terugkoppeling"]
+  H --> I["9. Last mile<br/>Levering"]</pre></div>
+    <div class="notes"><h3>Kernwijzigingen in v0.2</h3><ul>
+<li>Boxinhoud en receptbepaling staan vóór de orderflow.</li>
+<li>Inkoop start in eerste instantie vanuit een prognosemodule, niet direct vanuit orders.</li>
+<li>Orders slokken uiteindelijk de beschikbare prognosevoorraad op.</li>
+<li>Odoo-orderregels bevatten het daadwerkelijke product op de orderregel, dus de box als product, niet per se een concrete boxvariant.</li>
+<li>Leverweek is aangepast naar leverdatum/productiedag waar relevant.</li>
+</ul></div>
+  </article>
+</section><section id="boxinhoud" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>1. Odoo — boxinhoud & receptbepaling</h2><p>Van culinaire planning naar boxinhoud, recepten, SKU’s en basis voor prognose.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Start: culinaire / commerciële planning"] --> B["Odoo Culinair / boxconfiguratie"]
+  B --> C["Box bepalen per leverdatum / productiedag"]
+  C --> D["Recepten selecteren"]
+  D --> E["Ingrediënten bepalen"]
+  E --> F["Algemene ingrediënten vertalen naar concrete SKU's"]
+  F --> G["Hoeveelheden bepalen per aantal personen"]
+  G --> H["Stuklijst / BOM opbouwen"]
+  H --> I["Controle op volledigheid"]
+  I --> J{"Boxinhoud akkoord?"}
+  J -- "Nee" --> B
+  J -- "Ja" --> K["Definitieve boxinhoud"]
+  K --> L["Output naar prognosemodule:<br/>SKU's, hoeveelheden, productiedag"]
+  K --> M["Output naar orderverwerking:<br/>boxproduct / productcontext"]
+  K --> N["Open punt:<br/>variantkoppeling per week/dag nog te bepalen"]</pre></div>
+    <div class="notes"><h3>Belangrijk</h3><ul>
+<li>Deze stap is naar voren gehaald en is nu stap 1.</li>
+<li>Variantkoppeling in Odoo is nog niet concreet genoeg en moet met het team worden besproken.</li>
+<li>De output voedt zowel prognose/inkoop als latere orderverwerking.</li>
+</ul><div class="open-point">Open teamvraag: hoe koppelen we boxvariant, week/dag en het daadwerkelijke boxproduct technisch en functioneel in Odoo?</div></div>
+  </article>
+</section><section id="orderinitiatie" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>2. Shopify + JUO — orderinitiatie</h2><p>Van klantkeuze en abonnementslogica naar definitieve order voor Odoo.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Klant"] --> B["Shopify webshop"]
+  B --> C["Box / abonnement kiezen"]
+  C --> D["JUO subscription module"]
+  D --> E["Abonnement beheren"]
+  E --> E1["Box wijzigen"]
+  E --> E2["Levering overslaan"]
+  E --> E3["Adres wijzigen"]
+  E --> E4["Bezorgmethode wijzigen"]
+  E --> E5["Losse artikelen / add-ons aanpassen"]
+  E1 --> F["Wijzigingen mogelijk tot T-6"]
+  E2 --> F
+  E3 --> F
+  E4 --> F
+  E5 --> F
+  F --> G{"T-6 bereikt?"}
+  G -- "Nee" --> E
+  G -- "Ja" --> H["JUO lockt levering"]
+  H --> I["JUO genereert definitieve abonnementsorder"]
+  I --> J["Shopify registreert order"]
+  J --> K["Orderstatus: open / unpaid"]
+  K --> L["Output: definitieve order voor Odoo"]</pre></div>
+    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
+  </article>
+</section><section id="orderverwerking" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>3. Odoo — orderverwerking</h2><p>Van definitieve order naar operationele order voor voorraadconsumptie en labelgeneratie.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: definitieve order uit Shopify/JUO"] --> B["Odoo ontvangt order"]
+  B --> C["Verkooporder aanmaken of bijwerken"]
+  C --> D["Klant koppelen"]
+  D --> E["Leverdatum koppelen"]
+  E --> F["Orderregels aanmaken"]
+  F --> G["Orderregel = daadwerkelijk product<br/>bijv. de gekozen box als product"]
+  G --> H["Add-ons als aparte orderregels koppelen"]
+  H --> I["Adres / pickup koppelen"]
+  I --> J["Order operationeel beschikbaar maken"]
+  J --> K["Beschikbaar voor labelgeneratie last mile"]
+  J --> L["Beschikbaar voor voorraadconsumptie"]
+  J --> M["Beschikbaar voor productie-/fulfillmentcontrole"]
+  K --> N["Output: daadwerkelijke orders"]
+  L --> N
+  M --> N
+  N --> O["Open punt:<br/>variantkoppeling per week/dag nog bespreken"]</pre></div>
+    <div class="notes"><h3>Aangepast</h3><ul>
+<li>Niet meer “boxvariant” als vaste orderkoppeling noemen.</li>
+<li>In Odoo komt op de orderregel het daadwerkelijke product te staan, bijvoorbeeld de box als product.</li>
+<li>Leverweek is hier aangepast naar leverdatum.</li>
+<li>Deze daadwerkelijke orders zijn deels nodig voor labelgeneratie per last mile en deels om prognosevoorraad op te slokken.</li>
+</ul></div>
+  </article>
+</section><section id="prognoseinkoop" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>4. Odoo — prognosemodule & inkoop</h2><p>Inkoop start op basis van prognose, niet rechtstreeks op basis van definitieve orders.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: boxinhoud, SKU's, hoeveelheden en productiedag"] --> B["Odoo prognosemodule"]
+  B --> C["Prognosebehoefte bepalen"]
+  C --> D["Benodigde producten per productiedag"]
+  D --> E["Benodigde aantallen per SKU"]
+  E --> F["Voorraad controleren"]
+  F --> G{"Voldoende voorraad / dekking?"}
+  G -- "Ja" --> H["Voorraad beschikbaar houden voor productiedag"]
+  G -- "Nee" --> I["Leverancier bepalen"]
+  I --> J["Prognose / RFQ opstellen"]
+  J --> K["Definitieve inkooporder maken"]
+  K --> L["Inkooporder naar leverancier"]
+  L --> M["Goederen ontvangen"]
+  M --> N["Ontvangst registreren in Odoo"]
+  N --> O["Voorraad beschikbaar voor productiedag"]
+  H --> P["Output: prognosevoorraad beschikbaar"]
+  O --> P</pre></div>
+    <div class="notes"><h3>Aangepast</h3><ul>
+<li>“Benodigde producten per leverweek” is vervangen door “benodigde producten per productiedag”.</li>
+<li>De inkoopflow draait in eerste instantie op een prognosemodule.</li>
+<li>Deze prognosemodule is nog niet direct ordergedreven.</li>
+</ul></div>
+  </article>
+</section><section id="voorraadreservering" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>5. Odoo — voorraadreservering per productiedag</h2><p>Beschikbare prognosevoorraad wordt gereserveerd en later opgeslokt door daadwerkelijke orders.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: prognosevoorraad beschikbaar"] --> B["Voorraad koppelen aan productiedag"]
+  C["Input: daadwerkelijke orders"] --> D["Ordervraag per leverdatum/productiedag bepalen"]
+  B --> E["Voorraadreservering maken voor productiedag"]
+  D --> F["Daadwerkelijke orderaantallen matchen met prognose"]
+  E --> G["Gereserveerde voorraad voor productie"]
+  F --> H["Orders slokken prognosevoorraad op"]
+  G --> I["Controle beschikbare voorraad per SKU"]
+  H --> I
+  I --> J{"Genoeg voorraad voor productiedag?"}
+  J -- "Nee" --> K["Tekort / afwijking signaleren"]
+  J -- "Ja" --> L["Voorraad vrijgeven voor productieplanning"]
+  K --> M["Aanvullen, vervangen of corrigeren"]
+  M --> I
+  L --> N["Output: beschikbare en gereserveerde producten voor productie"]</pre></div>
+    <div class="notes"><h3>Nieuwe stap</h3><ul>
+<li>Er moet een reservering komen voor voorraad op de beschikbare productiedag.</li>
+<li>Werkelijke orders moeten de prognosevoorraad uiteindelijk consumeren.</li>
+<li>Deze stap vormt de brug tussen prognosegedreven inkoop en ordergedreven productie/labeling.</li>
+</ul></div>
+  </article>
+</section><section id="productieplanning" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>6. Odoo — productieplanning</h2><p>Van gereserveerde voorraad en daadwerkelijke orders naar instructies voor IJsVogel.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: daadwerkelijke orders"] --> B["Odoo productieplanning"]
+  C["Input: gereserveerde voorraad per productiedag"] --> B
+  B --> D["Aantallen per boxproduct bepalen"]
+  D --> E["Aantallen per productiedag bepalen"]
+  E --> F["Benodigde producten per box bepalen"]
+  F --> G["Productieorders / werkorders aanmaken"]
+  G --> H["Vulinstructies voorbereiden"]
+  H --> I["Controle op productbeschikbaarheid"]
+  I --> J{"Alles beschikbaar?"}
+  J -- "Nee" --> K["Afwijking / tekort signaleren"]
+  K --> B
+  J -- "Ja" --> L["Productieplanning vrijgeven"]
+  L --> M["Output: instructies richting IJsVogel"]</pre></div>
+    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
+  </article>
+</section><section id="ijsvogel" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>7. IJsVogel — boxen vullen & klaarzetten</h2><p>De fysieke operatie: boxen vullen met de juiste producten en hoeveelheden.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: vulinstructies uit Odoo"] --> B["IJsVogel operatie"]
+  B --> C["Producten klaarzetten"]
+  C --> D["Producten verzamelen per boxproduct / boxvariant indien bekend"]
+  D --> E["Juiste hoeveelheden afmeten / picken"]
+  E --> F["Boxen fysiek vullen"]
+  F --> G["Add-ons toevoegen"]
+  G --> H["Inhoud controleren"]
+  H --> I{"Box correct gevuld?"}
+  I -- "Nee" --> J["Afwijking herstellen of registreren"]
+  J --> H
+  I -- "Ja" --> K["Box gereedmelden"]
+  K --> L["Boxen sorteren voor levering / pickup"]
+  L --> M["Boxen klaarzetten voor overdracht"]
+  M --> N["Output: gereedmelding en eventuele afwijkingen"]</pre></div>
+    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
+  </article>
+</section><section id="terugkoppeling" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>8. Odoo — operationele terugkoppeling</h2><p>Van gereedmelding en afwijkingen naar orders klaar voor last mile.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: gereedmelding / afwijkingen uit IJsVogel"] --> B["Odoo operationele verwerking"]
+  B --> C["Productie gereed verwerken"]
+  C --> D["Fulfillmentstatus bijwerken"]
+  D --> E["Voorraadmutaties verwerken"]
+  E --> F["Afwijkingen registreren"]
+  F --> G{"Order klaar voor levering?"}
+  G -- "Nee" --> H["Blokkade / afwijking opvolgen"]
+  H --> B
+  G -- "Ja" --> I["Order markeren als klaar voor transport"]
+  I --> J["Leverinformatie beschikbaar maken"]
+  J --> K["Output: orders klaar voor last mile en labelgeneratie"]</pre></div>
+    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
+  </article>
+</section><section id="lastmile" class="tab-panel " role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header"><h2>9. Last mile & levering</h2><p>Van orders klaar voor last mile naar daadwerkelijke levering bij de klant.</p></div>
+    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  A["Input: orders klaar voor last mile"] --> B["Last mile systeem / transportoperatie"]
+  B --> C["Labels / leverinformatie gebruiken"]
+  C --> D["Routes plannen"]
+  D --> E["Boxen laden"]
+  E --> F["Bezorging uitvoeren"]
+  F --> G{"Levering gelukt?"}
+  G -- "Ja" --> H["Status: geleverd"]
+  G -- "Nee" --> I["Leverafwijking registreren"]
+  I --> J["Afwijking terugkoppelen aan Odoo"]
+  J --> K["Orderstatus / opvolging bijwerken"]
+  H --> L["Klant ontvangt box"]
+  L --> M["Levering afgerond"]
+  M --> N["Eventuele status terug naar klantomgeving"]</pre></div>
+    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
+  </article>
+</section>
+<footer>Versie 0.2 · Werkdocument voor Boerschappen B2C ketenflow · Variantkoppeling per week/dag is bewust als open punt opgenomen.</footer>
+</main>
+</body>
+</html>
