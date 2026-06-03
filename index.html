@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Boerschappen B2C ketenflow v0.2</title>
+<title>Boerschappen B2C ketenflow v0.3</title>
 <script type="module">
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 mermaid.initialize({
@@ -14,8 +14,56 @@ mermaid.initialize({
     tertiaryColor:"#FFDCB8", background:"#FFFFFF", mainBkg:"#FFFFEF", secondBkg:"#DCEBCF",
     tertiaryBkg:"#FFDCB8", clusterBkg:"#FFFFFF", clusterBorder:"#E0A69F", edgeLabelBackground:"#FFFFFF"
   },
-  flowchart:{ htmlLabels:true, curve:"basis" }
+  securityLevel:"loose", flowchart:{ htmlLabels:true, curve:"basis" }
 });
+
+const modalContent = {
+  boxconfiguratie: {
+    title: "Odoo Culinair / boxconfiguratie",
+    eyebrow: "Test popup · Boxinhoud",
+    body: `
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere,
+        justo in facilisis fermentum, lorem sapien tincidunt libero, vitae
+        sollicitudin massa neque non orci.
+      </p>
+      <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+        doloremque laudantium. Hier kan later functionele context komen, zoals:
+      </p>
+      <ul>
+        <li>wat deze stap precies doet;</li>
+        <li>welke data nodig is;</li>
+        <li>welke eigenaar of stakeholder betrokken is;</li>
+        <li>welke open vragen of risico’s er zijn.</li>
+      </ul>
+    `
+  }
+};
+
+window.openNodeModal = function (id) {
+  const content = modalContent[id];
+  if (!content) return;
+
+  document.querySelector(".modal-eyebrow").textContent = content.eyebrow || "Detail";
+  document.querySelector(".modal-title").textContent = content.title;
+  document.querySelector(".modal-body").innerHTML = content.body;
+
+  const modal = document.querySelector(".modal");
+  modal.hidden = false;
+  modal.classList.add("active");
+  document.body.classList.add("modal-open");
+  document.querySelector(".modal-close").focus();
+};
+
+window.closeNodeModal = function () {
+  const modal = document.querySelector(".modal");
+  modal.classList.remove("active");
+  modal.hidden = true;
+  document.body.classList.remove("modal-open");
+};
+
+
 async function renderActiveDiagram(){
   const activePanel=document.querySelector(".tab-panel.active");
   if(!activePanel) return;
@@ -29,6 +77,9 @@ async function renderActiveDiagram(){
 window.addEventListener("DOMContentLoaded", async()=>{
   const tabs=document.querySelectorAll("[data-tab]");
   const panels=document.querySelectorAll(".tab-panel");
+  document.querySelector(".modal-close").addEventListener("click", window.closeNodeModal);
+  document.querySelector(".modal-backdrop").addEventListener("click", window.closeNodeModal);
+  document.addEventListener("keydown", (event)=>{ if(event.key==="Escape") window.closeNodeModal(); });
   tabs.forEach(tab=>tab.addEventListener("click", async()=>{
     const target=tab.dataset.tab;
     tabs.forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
@@ -50,12 +101,30 @@ window.addEventListener("DOMContentLoaded", async()=>{
 .tab-panel{display:none} .tab-panel.active{display:grid;gap:18px} .card{background:var(--wit);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);overflow:hidden}
 .card-header{display:grid;gap:8px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:rgba(220,235,207,.38)} h2{margin:0;font-size:clamp(24px,3vw,36px);letter-spacing:-.03em;line-height:1.1} .card-header p{margin:0;color:rgba(60,51,47,.74)}
 .diagram-wrap{width:100%;overflow:auto;padding:24px;background:radial-gradient(circle at 20px 20px,rgba(128,136,94,.08) 2px,transparent 0) 0 0/28px 28px,#fff} .mermaid-output{min-width:880px} .notes{display:grid;gap:12px;padding:20px 24px 24px;background:#fff} .notes h3{margin:0;font-size:18px} .notes ul{margin:0;padding-left:18px;color:rgba(60,51,47,.82)} .notes li+li{margin-top:6px} .open-point{padding:14px 16px;border-radius:var(--radius);background:var(--roze-licht);font-weight:650} .mermaid-source{display:none} footer{margin-top:28px;color:rgba(60,51,47,.55);font-size:13px}
+
+body.modal-open{overflow:hidden}
+.modal[hidden]{display:none}
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px}
+.modal-backdrop{position:absolute;inset:0;background:rgba(60,51,47,.44);backdrop-filter:blur(4px)}
+.modal-card{position:relative;width:min(680px,calc(100vw - 32px));max-height:calc(100vh - 48px);overflow:auto;background:var(--zand);border:1px solid rgba(60,51,47,.12);border-radius:24px;box-shadow:0 24px 80px rgba(60,51,47,.22)}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.1);background:#fff}
+.modal-heading{display:grid;gap:6px}
+.modal-eyebrow{color:var(--flora);font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
+.modal-title{margin:0;font-size:28px;line-height:1.1;letter-spacing:-.03em}
+.modal-close{appearance:none;border:0;border-radius:999px;width:40px;height:40px;background:var(--groen-donker);color:var(--zand);font-size:24px;line-height:1;cursor:pointer}
+.modal-close:hover{background:var(--bodem)}
+.modal-body{padding:22px 24px;color:rgba(60,51,47,.84)}
+.modal-body p{margin:0 0 14px}
+.modal-body ul{margin:0;padding-left:20px}
+.modal-body li+li{margin-top:6px}
+.mermaid-output .clickable{cursor:pointer}
+
 @media(max-width:720px){.page{width:min(100vw - 20px,1320px);padding-top:20px}.tabs{position:static}.tab{flex:1 1 auto}.card-header,.notes,.diagram-wrap{padding-inline:16px}}
 </style>
 </head>
 <body>
 <main class="page">
-<header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.2</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen. Deze versie scheidt de prognosegedreven keten van de daadwerkelijke orderketen. Odoo bepaalt eerst boxinhoud, receptuur en prognosebehoefte. Shopify + JUO initiëren later de klantorders. Orders slokken uiteindelijk de prognosevoorraad op.</p></header>
+<header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.3</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen. Deze versie scheidt de prognosegedreven keten van de daadwerkelijke orderketen. Odoo bepaalt eerst boxinhoud, receptuur en prognosebehoefte. Shopify + JUO initiëren later de klantorders. Orders slokken uiteindelijk de prognosevoorraad op.</p></header>
 <nav class="tabs" role="tablist" aria-label="B2C keten diagrammen"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button>
 <button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button>
 <button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button>
@@ -91,7 +160,10 @@ window.addEventListener("DOMContentLoaded", async()=>{
   <article class="card">
     <div class="card-header"><h2>1. Odoo — boxinhoud & receptbepaling</h2><p>Van culinaire planning naar boxinhoud, recepten, SKU’s en basis voor prognose.</p></div>
     <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
-  A["Start: culinaire / commerciële planning"] --> B["Odoo Culinair / boxconfiguratie"]
+  A["Start: culinaire / commerciële planning"] --> B["Odoo Culinair / boxconfiguratie<br/><small>Klik voor details</small>"]
+  click B call openNodeModal("boxconfiguratie") "Open details"
+  class B clickableNode
+  classDef clickableNode fill:#FFDCB8,stroke:#A1705C,stroke-width:2px,color:#3C332F
   B --> C["Box bepalen per leverdatum / productiedag"]
   C --> D["Recepten selecteren"]
   D --> E["Ingrediënten bepalen"]
@@ -291,7 +363,22 @@ window.addEventListener("DOMContentLoaded", async()=>{
     <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
   </article>
 </section>
-<footer>Versie 0.2  · Werkdocument voor Boerschappen B2C ketenflow · Variantkoppeling per week/dag is bewust als open punt opgenomen.</footer>
+
+<div class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-backdrop" aria-hidden="true"></div>
+  <article class="modal-card">
+    <header class="modal-header">
+      <div class="modal-heading">
+        <div class="modal-eyebrow">Detail</div>
+        <h2 id="modal-title" class="modal-title">Titel</h2>
+      </div>
+      <button class="modal-close" type="button" aria-label="Sluit popup">×</button>
+    </header>
+    <div class="modal-body"></div>
+  </article>
+</div>
+
+<footer>Versie 0.3 · Werkdocument voor Boerschappen B2C ketenflow · Variantkoppeling per week/dag is bewust als open punt opgenomen.</footer>
 </main>
 </body>
 </html>
