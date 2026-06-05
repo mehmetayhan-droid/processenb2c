@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Boerschappen B2C ketenflow v0.3.6</title>
+<title>Boerschappen B2C ketenflow v0.3.8</title>
 <script type="module">
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 mermaid.initialize({
@@ -24,6 +24,66 @@ mermaid.initialize({
 
 
 const modalContent = {
+  juoLocktBestelling: {
+    match: ["JUO lockt bestelling"],
+    title: "JUO lockt bestelling",
+    eyebrow: "JUO · betaling & ordercreatie",
+    body: `
+      <table class="modal-table">
+        <thead>
+          <tr>
+            <th>Dag</th>
+            <th>Fase</th>
+            <th>Actie & status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dag T-6</td>
+            <td>Incasso start</td>
+            <td>
+              JUO geeft Mollie de opdracht. Mollie schiet de incasso in bij de banken.<br><br>
+              Shopify: Nog geen order zichtbaar.
+            </td>
+          </tr>
+          <tr>
+            <td>Dag T-5</td>
+            <td>Verwerking</td>
+            <td>
+              De bank van de klant verwerkt de afschrijving.<br><br>
+              Status: De betaling staat bij Mollie op 'pending'.
+            </td>
+          </tr>
+          <tr>
+            <td>Dag T-4</td>
+            <td>Settlement</td>
+            <td>
+              Mollie ontvangt de bevestiging van de bank.<br><br>
+              Status: Betaling springt op 'paid'.
+            </td>
+          </tr>
+          <tr>
+            <td>Dag T-4</td>
+            <td>Ordercreatie</td>
+            <td>
+              JUO ontvangt het signaal "Betaald" en maakt de order aan in Shopify.<br><br>
+              Shopify: De order verschijnt nu pas als 'Paid'.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    `
+  },
+  outputDaadwerkelijkeOrders: {
+    match: ["Output: daadwerkelijke orders"],
+    title: "Output: daadwerkelijke orders",
+    eyebrow: "Odoo orderverwerking",
+    body: `
+      <p>
+        Order bevestigen in Odoo? Automatisch?
+      </p>
+    `
+  },
   definitieveVoorraadPrognoseAfboeken: {
     match: ["Definitieve voorraad moet prognosevoorraad gaan afboeken"],
     title: "Definitieve voorraad moet prognosevoorraad gaan afboeken",
@@ -293,11 +353,37 @@ body.modal-open{overflow:hidden}
   stroke-width: 2.5px;
 }
 
+
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.modal-table th,
+.modal-table td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(60, 51, 47, 0.14);
+  text-align: left;
+  vertical-align: top;
+}
+
+.modal-table th {
+  background: #DCEBCF;
+  color: #3C332F;
+  font-weight: 800;
+}
+
+.modal-table td:first-child {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
 </style>
 </head>
 <body>
 <main class="page">
-<header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.3.6</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen. Deze versie scheidt de prognosegedreven keten van de daadwerkelijke orderketen. Odoo bepaalt eerst boxinhoud, receptuur en prognosebehoefte. Shopify + JUO initiëren later de klantorders. Orders slokken uiteindelijk de prognosevoorraad op.</p></header>
+<header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.3.8</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen. Deze versie scheidt de prognosegedreven keten van de daadwerkelijke orderketen. Odoo bepaalt eerst boxinhoud, receptuur en prognosebehoefte. Shopify + JUO initiëren later de klantorders. Orders slokken uiteindelijk de prognosevoorraad op.</p></header>
 <nav class="tabs" role="tablist" aria-label="B2C keten diagrammen"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button>
 <button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button>
 <button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button>
@@ -554,7 +640,7 @@ body.modal-open{overflow:hidden}
   </article>
 </div>
 
-<footer>Versie 0.3.6 · Werkdocument voor Boerschappen B2C ketenflow · Variantkoppeling per week/dag is bewust als open punt opgenomen.</footer>
+<footer>Versie 0.3.8 · Werkdocument voor Boerschappen B2C ketenflow · Variantkoppeling per week/dag is bewust als open punt opgenomen.</footer>
 </main>
 </body>
 </html>
