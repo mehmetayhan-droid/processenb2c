@@ -1,4 +1,4 @@
-<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Boerschappen B2C ketenflow v0.4.0</title>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Boerschappen B2C ketenflow v0.4.1</title>
 <script type="module">
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 mermaid.initialize({startOnLoad:false,theme:"base",themeVariables:{fontFamily:"Inter, Outfit, system-ui, sans-serif",primaryColor:"#FFFFEF",primaryTextColor:"#3C332F",primaryBorderColor:"#A4B08B",lineColor:"#80885E",secondaryColor:"#DCEBCF",tertiaryColor:"#FFDCB8",background:"#FFFFFF",mainBkg:"#FFFFEF",secondBkg:"#DCEBCF",tertiaryBkg:"#FFDCB8",clusterBkg:"#FFFFFF",clusterBorder:"#E0A69F",edgeLabelBackground:"#FFFFFF"},flowchart:{htmlLabels:true,curve:"basis"}});
@@ -35,7 +35,74 @@ tabs.forEach((tab)=>tab.addEventListener("click",async()=>{const target=tab.data
 :root{--bodem:#3C332F;--fauna:#E0A69F;--flora:#80885E;--zand:#FFFFEF;--wit:#FFFFFF;--groen-licht:#DCEBCF;--groen:#A4B08B;--groen-donker:#505A3D;--roze-licht:#FFDCB8;--radius:16px;--shadow:0 12px 32px rgba(60,51,47,.08)}*{box-sizing:border-box}body{margin:0;color:var(--bodem);background:linear-gradient(180deg,var(--zand),#fff);font-family:Inter,Outfit,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}.page{width:min(1320px,calc(100vw - 32px));margin:0 auto;padding:32px 0 56px}header{display:grid;gap:12px;margin-bottom:24px}.eyebrow{color:var(--flora);font-size:14px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}h1{margin:0;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.04em}.intro{max-width:980px;margin:0;color:rgba(60,51,47,.78);font-size:17px}.tabs{display:flex;flex-wrap:wrap;gap:8px;padding:8px;margin:24px 0;background:rgba(255,255,255,.74);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);position:sticky;top:12px;z-index:10;backdrop-filter:blur(10px)}.tab{appearance:none;border:0;border-radius:999px;padding:10px 14px;color:var(--bodem);background:transparent;cursor:pointer;font:inherit;font-weight:700;font-size:14px}.tab:hover{background:var(--groen-licht)}.tab.active{color:var(--zand);background:var(--groen-donker)}.tab-panel{display:none}.tab-panel.active{display:grid;gap:18px}.card{background:var(--wit);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);overflow:hidden}.card-header{display:grid;gap:8px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:rgba(220,235,207,.38)}h2{margin:0;font-size:clamp(24px,3vw,36px);letter-spacing:-.03em;line-height:1.1}.card-header p{margin:0;color:rgba(60,51,47,.74)}.diagram-wrap{width:100%;overflow:auto;padding:24px;background:radial-gradient(circle at 20px 20px,rgba(128,136,94,.08) 2px,transparent 0) 0 0/28px 28px,#fff}.mermaid-output{min-width:880px}.notes{display:grid;gap:12px;padding:20px 24px 24px;background:#fff}.notes h3{margin:0;font-size:18px}.notes ul{margin:0;padding-left:18px;color:rgba(60,51,47,.82)}.mermaid-source{display:none}footer{margin-top:28px;color:rgba(60,51,47,.55);font-size:13px}
 body.modal-open{overflow:hidden}.modal[hidden]{display:none}.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px}.modal-backdrop{position:absolute;inset:0;background:rgba(60,51,47,.44);backdrop-filter:blur(4px)}.modal-card{position:relative;width:min(720px,calc(100vw - 32px));max-height:calc(100vh - 48px);overflow:auto;background:var(--zand);border:1px solid rgba(60,51,47,.12);border-radius:24px;box-shadow:0 24px 80px rgba(60,51,47,.22)}.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.1);background:#fff}.modal-heading{display:grid;gap:6px}.modal-eyebrow{color:var(--flora);font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}.modal-title{margin:0;font-size:28px;line-height:1.1;letter-spacing:-.03em}.modal-close{appearance:none;border:0;border-radius:999px;width:40px;height:40px;background:var(--groen-donker);color:var(--zand);font-size:24px;line-height:1;cursor:pointer}.modal-body{padding:22px 24px;color:rgba(60,51,47,.84)}.modal-body p{margin:0 0 14px}.node-detail-icon{filter:drop-shadow(0 3px 5px rgba(60,51,47,.28))}.mermaid-output g.node[role="button"]:hover rect{filter:drop-shadow(0 8px 14px rgba(60,51,47,.18));stroke-width:3px!important}.modal-table{width:100%;border-collapse:collapse;font-size:14px}.modal-table th,.modal-table td{padding:12px;border-bottom:1px solid rgba(60,51,47,.14);text-align:left;vertical-align:top}.modal-table th{background:#DCEBCF;color:#3C332F;font-weight:800}.modal-table td:first-child{white-space:nowrap;font-weight:700}
 .test-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:#fff}.progress-track{width:min(420px,calc(100vw - 96px));height:10px;margin-top:8px;background:rgba(60,51,47,.10);border-radius:999px;overflow:hidden}.progress-bar{width:0;height:100%;background:#80885E;border-radius:999px;transition:width .18s ease}.reset-tests{appearance:none;border:0;border-radius:999px;padding:10px 14px;background:#FFDCB8;color:#3C332F;font:inherit;font-weight:800;cursor:pointer}.test-content{display:grid;gap:18px;padding:24px;background:#fff}.test-group{background:#FFFFEF;border:1px solid rgba(60,51,47,.10);border-radius:24px;overflow:hidden}.test-group-header{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:16px 18px;background:#DCEBCF;border-bottom:1px solid rgba(60,51,47,.08)}.test-group-header h3{margin:0;font-size:18px}.test-count{color:rgba(60,51,47,.68);font-size:13px;font-weight:800;white-space:nowrap}.test-list{display:grid}.test-item{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(60,51,47,.08)}.test-item:hover{background:rgba(255,220,184,.34)}.test-item input{width:20px;height:20px;margin-top:2px;accent-color:#80885E}.test-copy{display:grid;gap:4px}.test-title{font-weight:850;color:#3C332F}.test-meta{width:max-content;max-width:100%;padding:3px 8px;border-radius:999px;background:#fff;color:#505A3D;font-size:12px;font-weight:800}.test-desc{color:rgba(60,51,47,.74);font-size:14px}.test-item input:checked + .test-copy .test-title{text-decoration:line-through;color:rgba(60,51,47,.55)}.open-questions ul{margin:0;padding:18px 22px 18px 40px;color:rgba(60,51,47,.82)}.open-questions li+li{margin-top:8px}@media(max-width:720px){.page{width:min(100vw - 20px,1320px);padding-top:20px}.tabs{position:static}.tab{flex:1 1 auto}.test-toolbar{display:grid}.reset-tests{width:100%}}
-</style></head><body><main class="page"><header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.4.0</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen, inclusief klikbare context-popups en afvinkbare testscenario’s.</p></header><nav class="tabs" role="tablist"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button><button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button><button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button><button class="tab " data-tab="orderverwerking" role="tab" aria-selected="false">3. Odoo order</button><button class="tab " data-tab="prognoseinkoop" role="tab" aria-selected="false">4. Prognose & inkoop</button><button class="tab " data-tab="voorraadreservering" role="tab" aria-selected="false">5. Voorraadreservering</button><button class="tab " data-tab="productieplanning" role="tab" aria-selected="false">6. Productieplanning</button><button class="tab " data-tab="ijsvogel" role="tab" aria-selected="false">7. IJsVogel</button><button class="tab " data-tab="terugkoppeling" role="tab" aria-selected="false">8. Odoo terugkoppeling</button><button class="tab " data-tab="lastmile" role="tab" aria-selected="false">9. Last mile</button><button class="tab" data-tab="testscenarios" role="tab" aria-selected="false">Testscenario’s</button></nav><section id="overview" class="tab-panel active" role="tabpanel" ><article class="card"><div class="card-header"><h2>Overzicht — overkoepelende volgorde</h2><p>De complete B2C-keten in één compacte lijn.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart LR
+
+/* v0.4.1 openklapbare testscenario's */
+.test-item{
+  display:block !important;
+  padding:0 !important;
+}
+
+.test-item summary{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:12px;
+  padding:16px 18px;
+  cursor:pointer;
+  list-style:none;
+  border-bottom:1px solid rgba(60,51,47,.08);
+}
+
+.test-item summary::-webkit-details-marker{
+  display:none;
+}
+
+.test-item summary:hover{
+  background:rgba(255,220,184,.34);
+}
+
+.test-item .chevron{
+  font-size:20px;
+  font-weight:900;
+  color:#80885E;
+  transition:transform .16s ease;
+}
+
+.test-item[open] .chevron{
+  transform:rotate(180deg);
+}
+
+.test-detail{
+  display:grid;
+  gap:14px;
+  padding:18px 22px 22px 50px;
+  background:#fff;
+  border-bottom:1px solid rgba(60,51,47,.08);
+}
+
+.detail-block h4{
+  margin:0 0 6px;
+  font-size:14px;
+  color:#505A3D;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+
+.detail-block p{
+  margin:0;
+  color:rgba(60,51,47,.82);
+}
+
+.detail-block ul{
+  margin:0;
+  padding-left:18px;
+  color:rgba(60,51,47,.82);
+}
+
+.detail-block li + li{
+  margin-top:5px;
+}
+
+</style></head><body><main class="page"><header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.4.1</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen, inclusief klikbare context-popups en afvinkbare testscenario’s.</p></header><nav class="tabs" role="tablist"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button><button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button><button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button><button class="tab " data-tab="orderverwerking" role="tab" aria-selected="false">3. Odoo order</button><button class="tab " data-tab="prognoseinkoop" role="tab" aria-selected="false">4. Prognose & inkoop</button><button class="tab " data-tab="voorraadreservering" role="tab" aria-selected="false">5. Voorraadreservering</button><button class="tab " data-tab="productieplanning" role="tab" aria-selected="false">6. Productieplanning</button><button class="tab " data-tab="ijsvogel" role="tab" aria-selected="false">7. IJsVogel</button><button class="tab " data-tab="terugkoppeling" role="tab" aria-selected="false">8. Odoo terugkoppeling</button><button class="tab " data-tab="lastmile" role="tab" aria-selected="false">9. Last mile</button><button class="tab" data-tab="testscenarios" role="tab" aria-selected="false">Testscenario’s</button></nav><section id="overview" class="tab-panel active" role="tabpanel" ><article class="card"><div class="card-header"><h2>Overzicht — overkoepelende volgorde</h2><p>De complete B2C-keten in één compacte lijn.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart LR
   A["1. Odoo<br/>Boxinhoud & recepten"] --> B["4. Odoo<br/>Prognosemodule & inkoop"]
   C["2. Shopify + JUO<br/>Orderinitiatie"] --> D["3. Odoo<br/>Orderverwerking"]
   A --> D
@@ -181,4 +248,574 @@ body.modal-open{overflow:hidden}.modal[hidden]{display:none}.modal{position:fixe
   J --> K["Orderstatus / opvolging bijwerken"]
   H --> L["Klant ontvangt box"]
   L --> M["Levering afgerond"]
-  M --> N["Eventuele status terug naar klantomgeving"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="testscenarios" class="tab-panel" role="tabpanel" hidden><article class="card"><div class="card-header"><h2>Testscenario’s — orderinitiatie tot levering</h2><p>Afvinkbare testset voor de end-to-end B2C-keten. De voortgang wordt lokaal opgeslagen in je browser.</p></div><div class="test-toolbar"><div><strong id="test-progress-label">0 van 0 tests afgevinkt</strong><div class="progress-track"><div class="progress-bar" id="test-progress-bar"></div></div></div><button class="reset-tests" type="button" id="reset-tests">Reset vinkjes</button></div><div class="test-content"><section class="test-group"><div class="test-group-header"><h3>Orderinitiatie in JUO / Shopify</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-01-klant-wijzigt-abonnement-v-r-deadline"><input id="test-01-klant-wijzigt-abonnement-v-r-deadline" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Klant wijzigt abonnement vóór deadline</span><span class="test-meta">JUO / Shopify</span><span class="test-desc">Box, levering, leverwijze, adres en add-ons kunnen vóór lockmoment worden gewijzigd.</span></span></label><label class="test-item" for="test-02-juo-lockt-bestelling"><input id="test-02-juo-lockt-bestelling" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">JUO lockt bestelling</span><span class="test-meta">JUO</span><span class="test-desc">Na lockmoment zijn klantwijzigingen niet meer toegestaan en blijft de data stabiel.</span></span></label><label class="test-item" for="test-03-incasso-en-ordercreatieflow"><input id="test-03-incasso-en-ordercreatieflow" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Incasso- en ordercreatieflow</span><span class="test-meta">JUO / Mollie / Shopify</span><span class="test-desc">Incasso en ordercreatie lopen volgens afgesproken flow.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Middleware / orderoverdracht naar Odoo</h3><span class="test-count">4 tests</span></div><div class="test-list"><label class="test-item" for="test-04-definitieve-order-wordt-naar-odoo-gestuurd"><input id="test-04-definitieve-order-wordt-naar-odoo-gestuurd" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Definitieve order wordt naar Odoo gestuurd</span><span class="test-meta">Shopify / JUO / Middleware / Odoo</span><span class="test-desc">Order wordt exact één keer aangemaakt en is herleidbaar.</span></span></label><label class="test-item" for="test-05-consument-bestaat-nog-niet-in-odoo"><input id="test-05-consument-bestaat-nog-niet-in-odoo" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Consument bestaat nog niet in Odoo</span><span class="test-meta">Middleware / Odoo</span><span class="test-desc">Nieuwe consument wordt aangemaakt en verkooporder wordt gekoppeld.</span></span></label><label class="test-item" for="test-06-consument-bestaat-al-in-odoo"><input id="test-06-consument-bestaat-al-in-odoo" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Consument bestaat al in Odoo</span><span class="test-meta">Middleware / Odoo</span><span class="test-desc">Bestaande consument wordt hergebruikt.</span></span></label><label class="test-item" for="test-07-verkooporder-bevat-alle-benodigde-data"><input id="test-07-verkooporder-bevat-alle-benodigde-data" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Verkooporder bevat alle benodigde data</span><span class="test-meta">Odoo</span><span class="test-desc">Product/orderregels, leverdatum, leverwijze, add-ons en referenties staan op de verkooporder.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Boxinhoud, recepten en publicatie</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-08-box-bepalen-per-week"><input id="test-08-box-bepalen-per-week" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Box bepalen per week</span><span class="test-meta">Odoo Culinair</span><span class="test-desc">Box wordt per week ingericht.</span></span></label><label class="test-item" for="test-09-recept-maken-op-basis-van-ingredi-nten"><input id="test-09-recept-maken-op-basis-van-ingredi-nten" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Recept maken op basis van ingrediënten</span><span class="test-meta">Odoo Culinair</span><span class="test-desc">Recept is bruikbaar voor stuklijst/productie.</span></span></label><label class="test-item" for="test-10-output-boxinhoud-naar-shopify-juo"><input id="test-10-output-boxinhoud-naar-shopify-juo" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Output boxinhoud naar Shopify/JUO</span><span class="test-meta">Odoo / Middleware / Shopify / JUO</span><span class="test-desc">Klant ziet juiste boxinhoud en recepten.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Prognose, inkoop en voorraad</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-11-prognosemodule-berekent-behoefte"><input id="test-11-prognosemodule-berekent-behoefte" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Prognosemodule berekent behoefte</span><span class="test-meta">Odoo Prognose</span><span class="test-desc">Benodigde producten per productiedag en aantallen per SKU worden berekend.</span></span></label><label class="test-item" for="test-12-prognose-leidt-tot-inkoop-rfq"><input id="test-12-prognose-leidt-tot-inkoop-rfq" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Prognose leidt tot inkoop/RFQ</span><span class="test-meta">Odoo Inkoop</span><span class="test-desc">RFQ/prognose en definitieve inkooporder zijn gescheiden.</span></span></label><label class="test-item" for="test-13-definitieve-orders-boeken-af-op-prognosevoorraad"><input id="test-13-definitieve-orders-boeken-af-op-prognosevoorraad" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Definitieve orders boeken af op prognosevoorraad</span><span class="test-meta">Odoo Voorraad / Sales / Productie</span><span class="test-desc">Definitieve orders slokken prognosevoorraad op.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Betaling, factuur en stornering</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-14-betaling-succesvol"><input id="test-14-betaling-succesvol" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Betaling succesvol</span><span class="test-meta">JUO / Mollie / Shopify / Odoo</span><span class="test-desc">Betaalstatus loopt correct door de keten.</span></span></label><label class="test-item" for="test-15-betaling-mislukt-of-blijft-pending"><input id="test-15-betaling-mislukt-of-blijft-pending" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Betaling mislukt of blijft pending</span><span class="test-meta">JUO / Mollie / Shopify / Odoo</span><span class="test-desc">Orderstatus, blokkade en opvolging zijn duidelijk.</span></span></label><label class="test-item" for="test-16-stornering-na-ordercreatie"><input id="test-16-stornering-na-ordercreatie" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Stornering na ordercreatie</span><span class="test-meta">Mollie / JUO / Shopify / Odoo / Finance</span><span class="test-desc">Stornering wordt geregistreerd op de afgesproken plek.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Productieplanning en IJsVogel / MyPlantFloor</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-17-productieplanning-maakt-instructies"><input id="test-17-productieplanning-maakt-instructies" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Productieplanning maakt instructies</span><span class="test-meta">Odoo Productieplanning</span><span class="test-desc">Aantallen per boxproduct/productiedag en producten per box kloppen.</span></span></label><label class="test-item" for="test-18-csv-richting-ijsvogel-myplantfloor"><input id="test-18-csv-richting-ijsvogel-myplantfloor" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">CSV richting IJsVogel/MyPlantFloor</span><span class="test-meta">Odoo / IJsVogel / MyPlantFloor</span><span class="test-desc">CSV bevat juiste velden en wordt geaccepteerd.</span></span></label><label class="test-item" for="test-19-ijsvogel-vult-boxen"><input id="test-19-ijsvogel-vult-boxen" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">IJsVogel vult boxen</span><span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span><span class="test-desc">Fysieke boxvulling sluit aan op digitale instructies.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Odoo terugkoppeling en fulfillment</h3><span class="test-count">2 tests</span></div><div class="test-list"><label class="test-item" for="test-20-gereedmelding-verwerken"><input id="test-20-gereedmelding-verwerken" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Gereedmelding verwerken</span><span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span><span class="test-desc">Productie gereed, fulfillmentstatus en voorraadmutaties worden verwerkt.</span></span></label><label class="test-item" for="test-21-afwijking-tijdens-vullen"><input id="test-21-afwijking-tijdens-vullen" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Afwijking tijdens vullen</span><span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span><span class="test-desc">Afwijkingen blokkeren waar nodig en zijn opvolgbaar.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Last mile en levering</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-22-labelgeneratie"><input id="test-22-labelgeneratie" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Labelgeneratie</span><span class="test-meta">Odoo / Last mile</span><span class="test-desc">Labels bevatten juiste klant-, lever- en boxinformatie.</span></span></label><label class="test-item" for="test-23-route-en-levering"><input id="test-23-route-en-levering" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Route en levering</span><span class="test-meta">Last mile / Odoo / klantomgeving</span><span class="test-desc">Route, levering en status afgerond werken correct.</span></span></label><label class="test-item" for="test-24-levering-mislukt"><input id="test-24-levering-mislukt" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Levering mislukt</span><span class="test-meta">Last mile / Odoo / klantenservice</span><span class="test-desc">Niet-geleverd wordt correct geregistreerd en opgevolgd.</span></span></label></div></section><section class="test-group open-questions"><div class="test-group-header"><h3>Open testvragen</h3><span class="test-count">6 vragen</span></div><ul><li>Wanneer ontstaat de Shopify-order definitief: bij lock, pending of paid?</li><li>Wordt de verkooporder in Odoo automatisch bevestigd?</li><li>Waar is factuurstatus leidend?</li><li>Waar registreren we storneringen en wat is de operationele impact?</li><li>Wat gebeurt er precies met de CSV in MyPlantFloor?</li><li>Hoe koppelen we box/week/boxproduct/variant in Odoo?</li></ul></section></div></article></section><div class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-backdrop" aria-hidden="true"></div><article class="modal-card"><header class="modal-header"><div class="modal-heading"><div class="modal-eyebrow">Detail</div><h2 id="modal-title" class="modal-title">Titel</h2></div><button class="modal-close" type="button" aria-label="Sluit popup">×</button></header><div class="modal-body"></div></article></div><footer>Versie 0.4.0 · Werkdocument voor Boerschappen B2C ketenflow.</footer></main></body></html>
+  M --> N["Eventuele status terug naar klantomgeving"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section>
+<section id="testscenarios" class="tab-panel" role="tabpanel" hidden>
+  <article class="card">
+    <div class="card-header">
+      <h2>Testscenario’s — orderinitiatie tot levering</h2>
+      <p>Afvinkbare en openklapbare testset voor de end-to-end B2C-keten. De voortgang wordt lokaal opgeslagen in je browser.</p>
+    </div>
+
+    <div class="test-toolbar">
+      <div>
+        <strong id="test-progress-label">0 van 0 tests afgevinkt</strong>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-bar" id="test-progress-bar"></div>
+        </div>
+      </div>
+      <button class="reset-tests" type="button" id="reset-tests">Reset vinkjes</button>
+    </div>
+
+    <div class="test-content">
+      
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Orderinitiatie in JUO / Shopify</h3>
+          <span class="test-count">3 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-01-klant-wijzigt-abonnement-v-r-deadline" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Klant wijzigt abonnement vóór deadline</span>
+                <span class="test-meta">JUO / Shopify</span>
+                <span class="test-desc">Valideren dat de klant vóór de lock-deadline wijzigingen kan doen.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat de klant vóór de lock-deadline wijzigingen kan doen.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>JUO / Shopify</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Klant past vóór T-6 zijn abonnement aan.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Box wijzigen.</li><li>Levering overslaan.</li><li>Losse artikelen/add-ons wijzigen.</li><li>Leverwijze wijzigen.</li><li>Adres wijzigen.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Wijziging wordt opgeslagen in JUO.</li><li>Klant ziet de aangepaste bestelling/levering in de klantomgeving.</li><li>Nog geen definitieve order richting Odoo zolang de bestelling niet gelockt is.</li><li>De laatste geldige klantkeuze is leidend bij lockmoment.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-02-juo-lockt-bestelling" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">JUO lockt bestelling</span>
+                <span class="test-meta">JUO</span>
+                <span class="test-desc">Valideren dat na locken geen klantwijzigingen meer mogelijk zijn.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat na locken geen klantwijzigingen meer mogelijk zijn.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>JUO</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Bestelling bereikt lockmoment.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Bestelling wordt gelockt.</li><li>Klant probeert daarna box, adres, leverwijze of add-ons te wijzigen.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Bestelling krijgt lockstatus.</li><li>Wijzigingen zijn niet meer toegestaan.</li><li>Klant krijgt duidelijke melding.</li><li>Gelockte data blijft stabiel voor vervolgproces.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-03-incasso-en-ordercreatieflow" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Incasso- en ordercreatieflow</span>
+                <span class="test-meta">JUO / Mollie / Shopify</span>
+                <span class="test-desc">Valideren dat betaling en ordercreatie in juiste volgorde lopen.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat betaling en ordercreatie in juiste volgorde lopen.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>JUO / Mollie / Shopify</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>JUO start incasso, Mollie verwerkt betaling, Shopify-order ontstaat.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>JUO geeft incasso-opdracht aan Mollie.</li><li>Mollie-status gaat naar pending.</li><li>Mollie-status gaat naar paid.</li><li>JUO ontvangt betaald-signaal.</li><li>Shopify-order wordt aangemaakt.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Mollie-statussen worden correct verwerkt.</li><li>Shopify-order wordt pas aangemaakt op het juiste moment volgens de gekozen definitieve flow.</li><li>Shopify-order bevat juiste klant, producten, orderregels, leverdatum, leverwijze en add-ons.</li><li>Geen dubbele orders bij herhaalde webhook of retry.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Middleware / orderoverdracht naar Odoo</h3>
+          <span class="test-count">4 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-04-definitieve-order-wordt-naar-odoo-gestuurd" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Definitieve order wordt naar Odoo gestuurd</span>
+                <span class="test-meta">Shopify / JUO / Middleware / Odoo</span>
+                <span class="test-desc">Valideren dat de order vanuit Shopify/JUO correct in Odoo landt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat de order vanuit Shopify/JUO correct in Odoo landt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Shopify / JUO / Middleware / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Betaalde/definitieve order wordt via middleware naar Odoo gestuurd.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Order ophalen/versturen vanuit Shopify/JUO.</li><li>Middleware verwerkt payload.</li><li>Odoo ontvangt order.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Order wordt exact één keer aangemaakt.</li><li>Order-ID/referentie is herleidbaar tussen Shopify/JUO en Odoo.</li><li>Fouten worden gelogd.</li><li>Retry maakt geen dubbele order aan.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-05-consument-bestaat-nog-niet-in-odoo" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Consument bestaat nog niet in Odoo</span>
+                <span class="test-meta">Middleware / Odoo</span>
+                <span class="test-desc">Valideren dat een nieuwe consument automatisch wordt aangemaakt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat een nieuwe consument automatisch wordt aangemaakt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Middleware / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Order komt binnen voor klant die nog niet bestaat in Odoo.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Order versturen met nieuwe klantgegevens.</li><li>Odoo zoekt bestaande consument.</li><li>Geen match gevonden.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Nieuwe consument wordt aangemaakt.</li><li>Verkooporder wordt aan deze consument gekoppeld.</li><li>Naam, e-mail, telefoon, adres en eventuele klantreferentie kloppen.</li><li>Geen dubbele klant bij later opnieuw ontvangen order.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-06-consument-bestaat-al-in-odoo" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Consument bestaat al in Odoo</span>
+                <span class="test-meta">Middleware / Odoo</span>
+                <span class="test-desc">Valideren dat bestaande consument wordt hergebruikt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat bestaande consument wordt hergebruikt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Middleware / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Order komt binnen voor bekende consument.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Order versturen met bestaand e-mailadres/customer-ID.</li><li>Odoo matcht consument.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Geen nieuwe consument aangemaakt.</li><li>Verkooporder wordt gekoppeld aan bestaande consument.</li><li>Gewijzigd adres/leverwijze wordt correct op orderniveau verwerkt.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-07-verkooporder-bevat-alle-benodigde-data" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Verkooporder bevat alle benodigde data</span>
+                <span class="test-meta">Odoo</span>
+                <span class="test-desc">Controleren dat de verkooporder operationeel bruikbaar is.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Controleren dat de verkooporder operationeel bruikbaar is.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Order is succesvol aangemaakt in Odoo.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Controleer product/orderregels.</li><li>Controleer leverdatum.</li><li>Controleer leverwijze.</li><li>Controleer add-ons.</li><li>Controleer klant/consument.</li><li>Controleer orderreferentie Shopify/JUO.</li><li>Controleer betaal-/factuurstatus indien beschikbaar.</li><li>Controleer status voor fulfillment/productie.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Alle data zit in de verkooporder.</li><li>Order is bruikbaar voor voorraadconsumptie, productiecontrole en labelgeneratie.</li><li>Onduidelijke velden staan niet leeg zonder foutmelding of logging.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Boxinhoud, recepten en publicatie naar Shopify/JUO</h3>
+          <span class="test-count">3 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-08-box-bepalen-per-week" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Box bepalen per week</span>
+                <span class="test-meta">Odoo Culinair</span>
+                <span class="test-desc">Valideren dat een box per week kan worden ingericht.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat een box per week kan worden ingericht.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo Culinair</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Culinair/PM richt een box in voor een specifieke week.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Box voor week aanmaken.</li><li>Producten/recepten koppelen.</li><li>Varianten of boxproducten koppelen voor zover al bepaald.</li><li>Configuratie opslaan.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Box is gekoppeld aan juiste week.</li><li>Boxinhoud is compleet.</li><li>Open punt rondom productinrichting/variantkoppeling is zichtbaar of testbaar als nog niet definitief.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-09-recept-maken-op-basis-van-ingredi-nten" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Recept maken op basis van ingrediënten</span>
+                <span class="test-meta">Odoo Culinair</span>
+                <span class="test-desc">Valideren dat receptopbouw logisch werkt vanuit ingrediënten/SKU’s.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat receptopbouw logisch werkt vanuit ingrediënten/SKU’s.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo Culinair</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Een recept wordt ingericht op basis van ingrediënten.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Ingrediënten/SKU’s koppelen.</li><li>Hoeveelheden per personenaantal vastleggen.</li><li>Niet-lineaire hoeveelheden testen.</li><li>Recept opslaan.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Recept bevat juiste ingrediënten/SKU’s.</li><li>Hoeveelheden kloppen per aantal personen.</li><li>Recept is bruikbaar voor stuklijst/productie.</li><li>Recept kan worden hergebruikt zonder onnodige duplicatie.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-10-output-boxinhoud-naar-shopify-juo" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Output boxinhoud naar Shopify/JUO</span>
+                <span class="test-meta">Odoo / Middleware / Shopify / JUO</span>
+                <span class="test-desc">Valideren dat klantzichtbare boxinhoud en recepten beschikbaar komen.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat klantzichtbare boxinhoud en recepten beschikbaar komen.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo / Middleware / Shopify / JUO</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Goedgekeurde boxinhoud wordt gepubliceerd richting klantomgeving.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Boxinhoud/recepten publiceren.</li><li>Data via API naar Shopify/JUO sturen.</li><li>Klantomgeving openen.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Klant ziet juiste boxinhoud.</li><li>Klant ziet juiste recepten.</li><li>Alleen goedgekeurde/publiceerbare content wordt getoond.</li><li>Productinformatie komt overeen met Odoo.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Prognose, inkoop en voorraad</h3>
+          <span class="test-count">3 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-11-prognosemodule-berekent-behoefte" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Prognosemodule berekent behoefte</span>
+                <span class="test-meta">Odoo Prognose/Inkoop</span>
+                <span class="test-desc">Valideren dat de prognoseflow los van daadwerkelijke orders werkt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat de prognoseflow los van daadwerkelijke orders werkt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo Prognose/Inkoop</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Op basis van boxinhoud wordt een prognosebehoefte bepaald.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Boxinhoud/SKU’s/hoeveelheden gebruiken als input.</li><li>Prognose per productiedag berekenen.</li><li>Aantallen per SKU bepalen.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Benodigde producten per productiedag kloppen.</li><li>Aantallen per SKU zijn herleidbaar naar boxinhoud.</li><li>Prognose creëert inkoopbehoefte waar nodig.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-12-prognose-leidt-tot-inkoop-rfq" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Prognose leidt tot inkoop/RFQ</span>
+                <span class="test-meta">Odoo Inkoop</span>
+                <span class="test-desc">Valideren dat inkoop op prognosebasis werkt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat inkoop op prognosebasis werkt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo Inkoop</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Er is onvoldoende voorraad voor de prognose.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Voorraad controleren.</li><li>Leverancier bepalen.</li><li>RFQ/prognose maken.</li><li>Inkooporder maken.</li><li>Goederenontvangst registreren.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>RFQ/prognose en definitieve inkooporder zijn goed te onderscheiden.</li><li>Leverancier en aantallen kloppen.</li><li>Ontvangen voorraad komt beschikbaar voor juiste productiedag.</li><li>Er ontstaat geen dubbele bestelling door verwarring tussen prognose en definitieve order.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-13-definitieve-orders-boeken-af-op-prognosevoorraad" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Definitieve orders boeken af op prognosevoorraad</span>
+                <span class="test-meta">Odoo Voorraad / Odoo Sales / Odoo Productieplanning</span>
+                <span class="test-desc">Valideren dat definitieve orders geen nieuwe inkoopbehoefte creëren, maar prognosevoorraad consumeren.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat definitieve orders geen nieuwe inkoopbehoefte creëren, maar prognosevoorraad consumeren.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo Voorraad / Odoo Sales / Odoo Productieplanning</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Prognosevoorraad is beschikbaar. Daarna komen daadwerkelijke orders binnen.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Prognosevoorraad reserveren.</li><li>Daadwerkelijke order ontvangen.</li><li>Order matchen met productiedag.</li><li>Voorraad laten afboeken/reserveren voor order/productie.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Definitieve order slokt prognosevoorraad op.</li><li>Er wordt niet opnieuw automatisch inkoopvoorraad aangemaakt.</li><li>Beschikbare voorraad per productiedag neemt correct af.</li><li>Tekort wordt alleen gesignaleerd wanneer definitieve ordervraag groter is dan prognosevoorraad.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Betaling, factuur en stornering</h3>
+          <span class="test-count">3 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-14-betaling-succesvol" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Betaling succesvol</span>
+                <span class="test-meta">JUO / Mollie / Shopify / Odoo</span>
+                <span class="test-desc">Valideren dat betaalstatus correct door de keten loopt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat betaalstatus correct door de keten loopt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>JUO / Mollie / Shopify / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Mollie bevestigt betaling als paid.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Incasso starten.</li><li>Mollie-status pending.</li><li>Mollie-status paid.</li><li>Shopify ontvangt betaalupdate.</li><li>Odoo ontvangt bijgewerkte betaalstatus.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Shopify staat op paid.</li><li>Klant ontvangt betaalbevestiging/factuur via Shopify.</li><li>Odoo heeft juiste betaalstatus of relevante referentie.</li><li>Order mag operationeel door naar levering.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-15-betaling-mislukt-of-blijft-pending" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Betaling mislukt of blijft pending</span>
+                <span class="test-meta">JUO / Mollie / Shopify / Odoo / Finance</span>
+                <span class="test-desc">Valideren wat er gebeurt als betaling niet succesvol is.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren wat er gebeurt als betaling niet succesvol is.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>JUO / Mollie / Shopify / Odoo / Finance</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Mollie blijft pending of betaling faalt.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Payment pending simuleren.</li><li>Payment failed simuleren.</li><li>Check orderstatus in Shopify/Odoo.</li><li>Check blokkade of opvolging.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Geen onterechte levering zonder afgesproken businessregel.</li><li>Status is zichtbaar voor Finance/operatie.</li><li>Klantflow/opvolging is duidelijk.</li><li>Geen dubbele incasso of dubbele order.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-16-stornering-na-ordercreatie" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Stornering na ordercreatie</span>
+                <span class="test-meta">Mollie / JUO / Shopify / Odoo / Finance</span>
+                <span class="test-desc">Open vraag testen/uitwerken: waar en hoe registreren we stornering?</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Open vraag testen/uitwerken: waar en hoe registreren we stornering?</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Mollie / JUO / Shopify / Odoo / Finance</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Order is al aangemaakt, maar betaling wordt later gestorneerd.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Stornering simuleren in Mollie.</li><li>Statusupdate richting JUO/Shopify/Odoo verwerken.</li><li>Check of verkooporder, factuurstatus en eventuele levering geraakt worden.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Stornering is zichtbaar in het juiste bronsysteem.</li><li>Odoo krijgt duidelijke status of signaal.</li><li>Finance weet waar de financiële opvolging plaatsvindt.</li><li>Operatie weet of order geblokkeerd, geannuleerd of alsnog geleverd moet worden.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Productieplanning en IJsVogel / MyPlantFloor</h3>
+          <span class="test-count">3 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-17-productieplanning-maakt-instructies" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Productieplanning maakt instructies</span>
+                <span class="test-meta">Odoo Productieplanning</span>
+                <span class="test-desc">Valideren dat Odoo productieplanning correcte instructies maakt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat Odoo productieplanning correcte instructies maakt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo Productieplanning</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Daadwerkelijke orders en gereserveerde voorraad zijn beschikbaar.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Aantallen per boxproduct bepalen.</li><li>Aantallen per productiedag bepalen.</li><li>Producten/hoeveelheden per box bepalen.</li><li>Productieorders/werkorders aanmaken.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Productieplanning klopt met daadwerkelijke orders.</li><li>Producten en hoeveelheden sluiten aan op boxinhoud.</li><li>Tekorten worden gesignaleerd.</li><li>Output is geschikt voor IJsVogel/MyPlantFloor.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-18-csv-richting-ijsvogel-myplantfloor" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">CSV richting IJsVogel/MyPlantFloor</span>
+                <span class="test-meta">Odoo / IJsVogel / MyPlantFloor</span>
+                <span class="test-desc">Valideren dat de CSV-output correct is.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat de CSV-output correct is.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo / IJsVogel / MyPlantFloor</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Odoo genereert instructies richting IJsVogel zoals voorheen vanuit OutSystems.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>CSV genereren.</li><li>CSV-formaat controleren.</li><li>CSV importeren in MyPlantFloor.</li><li>Check wat MyPlantFloor met CSV doet.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>CSV bevat juiste producten, hoeveelheden, boxproducten, productiedag en aantallen.</li><li>MyPlantFloor accepteert bestand.</li><li>Geen ontbrekende of verkeerd gemapte velden.</li><li>Afwijkingen worden gelogd.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-19-ijsvogel-vult-boxen" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">IJsVogel vult boxen</span>
+                <span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span>
+                <span class="test-desc">Valideren dat fysieke boxvulling aansluit op digitale instructies.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat fysieke boxvulling aansluit op digitale instructies.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>IJsVogel / MyPlantFloor / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>IJsVogel vult boxen op basis van ontvangen instructies.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Producten klaarzetten.</li><li>Juiste hoeveelheden picken.</li><li>Boxen vullen.</li><li>Add-ons toevoegen.</li><li>Controle uitvoeren.</li><li>Gereedmelding/afwijking teruggeven.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Boxinhoud klopt fysiek met instructie.</li><li>Aantallen kloppen per boxproduct/productiedag.</li><li>Afwijkingen worden geregistreerd.</li><li>Gereedmelding komt terug of is beschikbaar voor Odoo.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Odoo terugkoppeling en fulfillment</h3>
+          <span class="test-count">2 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-20-gereedmelding-verwerken" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Gereedmelding verwerken</span>
+                <span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span>
+                <span class="test-desc">Valideren dat Odoo operationele status correct verwerkt.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat Odoo operationele status correct verwerkt.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>IJsVogel / MyPlantFloor / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Boxen zijn gevuld en klaargezet.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Gereedmelding ontvangen.</li><li>Productie gereed verwerken.</li><li>Fulfillmentstatus bijwerken.</li><li>Voorraadmutaties verwerken.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Order/productie staat op gereed.</li><li>Voorraad is correct afgeboekt.</li><li>Order is klaar voor last mile.</li><li>Afwijkingen blokkeren waar nodig.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-21-afwijking-tijdens-vullen" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Afwijking tijdens vullen</span>
+                <span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span>
+                <span class="test-desc">Valideren wat gebeurt bij tekort of fout in fysieke operatie.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren wat gebeurt bij tekort of fout in fysieke operatie.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>IJsVogel / MyPlantFloor / Odoo</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Product ontbreekt of verkeerde hoeveelheid is gevuld.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Afwijking registreren.</li><li>Terugkoppelen naar Odoo.</li><li>Orderstatus controleren.</li><li>Eventuele herstelactie uitvoeren.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Afwijking is zichtbaar.</li><li>Order wordt niet onterecht vrijgegeven.</li><li>Herstelactie kan worden geregistreerd.</li><li>Voorraadcorrectie klopt.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+      <section class="test-group">
+        <div class="test-group-header">
+          <h3>Last mile en levering</h3>
+          <span class="test-count">3 tests</span>
+        </div>
+        <div class="test-list">
+          
+          <details class="test-item">
+            <summary>
+              <input id="test-22-labelgeneratie" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Labelgeneratie</span>
+                <span class="test-meta">Odoo / Last mile</span>
+                <span class="test-desc">Valideren dat daadwerkelijke orders bruikbaar zijn voor labels.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat daadwerkelijke orders bruikbaar zijn voor labels.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Odoo / Last mile</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Orders zijn klaar voor levering.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Leverinformatie beschikbaar maken.</li><li>Labels genereren.</li><li>Controle op klantnaam, adres, leverwijze, orderreferentie en boxinformatie.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Labels zijn compleet.</li><li>Geen ontbrekende klant- of leverdata.</li><li>Label hoort bij juiste order en box.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-23-route-en-levering" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Route en levering</span>
+                <span class="test-meta">Last mile / Odoo / klantomgeving</span>
+                <span class="test-desc">Valideren dat orders correct geleverd worden.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren dat orders correct geleverd worden.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Last mile / Odoo / klantomgeving</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Boxen worden geladen en bezorgd.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Route plannen.</li><li>Boxen laden.</li><li>Bezorging uitvoeren.</li><li>Status geleverd terugmelden.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Juiste box bij juiste klant.</li><li>Leverstatus wordt correct verwerkt.</li><li>Status kan terug naar Odoo en eventueel klantomgeving.</li><li>Levering wordt afgerond.</li></ul></div>
+            </div>
+          </details>
+        
+          <details class="test-item">
+            <summary>
+              <input id="test-24-levering-mislukt" type="checkbox" data-checklist-item onclick="event.stopPropagation()" />
+              <span class="test-copy">
+                <span class="test-title">Levering mislukt</span>
+                <span class="test-meta">Last mile / Odoo / klantenservice</span>
+                <span class="test-desc">Valideren exceptionflow bij niet-geleverde order.</span>
+              </span>
+              <span class="chevron">⌄</span>
+            </summary>
+            <div class="test-detail">
+              <div class="detail-block"><h4>Doel</h4><p>Valideren exceptionflow bij niet-geleverde order.</p></div>
+              <div class="detail-block"><h4>Systemen</h4><p>Last mile / Odoo / klantenservice</p></div>
+              <div class="detail-block"><h4>Scenario</h4><p>Klant is niet thuis, adres klopt niet of box kan niet geleverd worden.</p></div>
+              <div class="detail-block"><h4>Te testen acties</h4><ul><li>Niet-geleverd registreren.</li><li>Afwijking terugkoppelen.</li><li>Status in Odoo controleren.</li><li>Eventuele opvolging bepalen.</li></ul></div>
+              <div class="detail-block"><h4>Verwacht resultaat</h4><ul><li>Order krijgt juiste afwijkingsstatus.</li><li>Operatie/klantenservice kan opvolgen.</li><li>Geen onterechte status geleverd.</li><li>Eventuele voorraad/retour/compensatieflow is duidelijk.</li></ul></div>
+            </div>
+          </details>
+        
+        </div>
+      </section>
+    
+
+      <section class="test-group open-questions">
+        <div class="test-group-header">
+          <h3>Open testvragen</h3>
+          <span class="test-count">6 vragen</span>
+        </div>
+        <ul>
+          <li>Wanneer ontstaat de Shopify-order definitief: bij lock, pending of paid?</li><li>Wordt de verkooporder in Odoo automatisch bevestigd?</li><li>Waar is factuurstatus leidend?</li><li>Waar registreren we storneringen en wat is de operationele impact?</li><li>Wat gebeurt er precies met de CSV in MyPlantFloor?</li><li>Hoe koppelen we box/week/boxproduct/variant in Odoo?</li>
+        </ul>
+      </section>
+    </div>
+  </article>
+</section>
+
+<div class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-backdrop" aria-hidden="true"></div><article class="modal-card"><header class="modal-header"><div class="modal-heading"><div class="modal-eyebrow">Detail</div><h2 id="modal-title" class="modal-title">Titel</h2></div><button class="modal-close" type="button" aria-label="Sluit popup">×</button></header><div class="modal-body"></div></article></div><footer>Versie 0.4.1 · Werkdocument voor Boerschappen B2C ketenflow.</footer></main></body></html>
