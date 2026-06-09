@@ -1,403 +1,41 @@
-<!doctype html>
-<html lang="nl">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Boerschappen B2C ketenflow v0.3.8</title>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Boerschappen B2C ketenflow v0.4.0</title>
 <script type="module">
 import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-mermaid.initialize({
-  startOnLoad:false, theme:"base",
-  themeVariables:{
-    fontFamily:"Inter, Outfit, system-ui, sans-serif", primaryColor:"#FFFFEF", primaryTextColor:"#3C332F",
-    primaryBorderColor:"#A4B08B", lineColor:"#80885E", secondaryColor:"#DCEBCF",
-    tertiaryColor:"#FFDCB8", background:"#FFFFFF", mainBkg:"#FFFFEF", secondBkg:"#DCEBCF",
-    tertiaryBkg:"#FFDCB8", clusterBkg:"#FFFFFF", clusterBorder:"#E0A69F", edgeLabelBackground:"#FFFFFF"
-  },
-  securityLevel:"loose", flowchart:{ htmlLabels:true, curve:"basis" }
-});
-
-
-
-
-
-
+mermaid.initialize({startOnLoad:false,theme:"base",themeVariables:{fontFamily:"Inter, Outfit, system-ui, sans-serif",primaryColor:"#FFFFEF",primaryTextColor:"#3C332F",primaryBorderColor:"#A4B08B",lineColor:"#80885E",secondaryColor:"#DCEBCF",tertiaryColor:"#FFDCB8",background:"#FFFFFF",mainBkg:"#FFFFEF",secondBkg:"#DCEBCF",tertiaryBkg:"#FFDCB8",clusterBkg:"#FFFFFF",clusterBorder:"#E0A69F",edgeLabelBackground:"#FFFFFF"},flowchart:{htmlLabels:true,curve:"basis"}});
 
 const modalContent = {
-  juoLocktBestelling: {
-    match: ["JUO lockt bestelling"],
-    title: "JUO lockt bestelling",
-    eyebrow: "JUO · betaling & ordercreatie",
-    body: `
-      <table class="modal-table">
-        <thead>
-          <tr>
-            <th>Dag</th>
-            <th>Fase</th>
-            <th>Actie & status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Dag T-6</td>
-            <td>Incasso start</td>
-            <td>
-              JUO geeft Mollie de opdracht. Mollie schiet de incasso in bij de banken.<br><br>
-              Shopify: Nog geen order zichtbaar.
-            </td>
-          </tr>
-          <tr>
-            <td>Dag T-5</td>
-            <td>Verwerking</td>
-            <td>
-              De bank van de klant verwerkt de afschrijving.<br><br>
-              Status: De betaling staat bij Mollie op 'pending'.
-            </td>
-          </tr>
-          <tr>
-            <td>Dag T-4</td>
-            <td>Settlement</td>
-            <td>
-              Mollie ontvangt de bevestiging van de bank.<br><br>
-              Status: Betaling springt op 'paid'.
-            </td>
-          </tr>
-          <tr>
-            <td>Dag T-4</td>
-            <td>Ordercreatie</td>
-            <td>
-              JUO ontvangt het signaal "Betaald" en maakt de order aan in Shopify.<br><br>
-              Shopify: De order verschijnt nu pas als 'Paid'.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    `
-  },
-  outputDaadwerkelijkeOrders: {
-    match: ["Output: daadwerkelijke orders"],
-    title: "Output: daadwerkelijke orders",
-    eyebrow: "Odoo orderverwerking",
-    body: `
-      <p>
-        Order bevestigen in Odoo? Automatisch?
-      </p>
-    `
-  },
-  definitieveVoorraadPrognoseAfboeken: {
-    match: ["Definitieve voorraad moet prognosevoorraad gaan afboeken"],
-    title: "Definitieve voorraad moet prognosevoorraad gaan afboeken",
-    eyebrow: "Odoo voorraadreservering",
-    body: `
-      <p>
-        Definitieve orders moeten niet nieuwe inkoop voorraad gaan creëren, maar juist de voorraad van de prognose opslokken.
-      </p>
-    `
-  },
-  inputDefinitieveOrderShopifyJuo: {
-    match: ["Input: definitieve order uit Shopify/JUO"],
-    title: "Input: definitieve order uit Shopify/JUO",
-    eyebrow: "Open vraag · orderflow",
-    body: `
-      <p>
-        Stel dat er een stonering plaatsvindt: waar en hoe wordt deze geregistreerd?
-      </p>
-    `
-  },
-  boxBepalenPerWeek: {
-    match: ["Box bepalen per week"],
-    title: "Box bepalen per week",
-    eyebrow: "Odoo boxinhoud",
-    body: `
-      <p>
-        Op welke manier deze producten worden ingericht is nog niet bekend.
-      </p>
-    `
-  },
-  odooOntvangtOrder: {
-    match: ["Odoo ontvangt order"],
-    title: "Odoo ontvangt order",
-    eyebrow: "Odoo orderverwerking",
-    body: `
-      <p>
-        Wat is de factuurstatus van deze order?
-      </p>
-      <p>
-        Is deze al betaald?
-      </p>
-      <p>
-        Hoe en waar verwerken we facturen van deze order?
-      </p>
-    `
-  },
-  abonnementBeheren: {
-    match: ["Abonnement beheren"],
-    title: "Abonnement beheren",
-    eyebrow: "Shopify + JUO",
-    body: `
-      <p>
-        In eerste instantie zal dit gaan via de native JUO module, met toevoegingen van recepten en boxinhoud.
-      </p>
-      <p>
-        Dit betekent dat JUO leidend is voor de abonnementslogica, terwijl de klant in dezelfde omgeving relevante inhoudelijke context kan zien, zoals de gekozen box, recepten en boxinhoud.
-      </p>
-    `
-  },
-  shopifyRegistreertOrder: {
-    match: ["Shopify registreert order"],
-    title: "Shopify registreert order",
-    eyebrow: "Shopify + JUO",
-    body: `
-      <p>
-        Dit gebeurt pas wanneer Mollie een definitieve betaling binnenkrijgt.
-      </p>
-      <p>
-        In de meeste gevallen is dat ongeveer twee dagen na het locken van de order.
-      </p>
-    `
-  },
-  outputDefinitieveOrderVoorOdoo: {
-    match: ["Output: definitieve order voor Odoo"],
-    title: "Output: definitieve order voor Odoo",
-    eyebrow: "Overdracht naar Odoo",
-    body: `
-      <p>
-        Via de middleware wordt er een order aangemaakt in Odoo.
-      </p>
-      <p>
-        Deze order vormt daarna de basis voor de operationele verwerking in Odoo, waaronder orderverwerking, voorraadconsumptie, productiecontrole en labelgeneratie richting last mile.
-      </p>
-    `
-  },
-  outputInstructiesIJsvogel: {
-    match: ["Output: instructies richting IJsVogel"],
-    title: "Output: instructies richting IJsVogel",
-    eyebrow: "Odoo productieplanning",
-    body: `
-      <p>
-        Dit is een CSV zoals die nu ook gegenereerd wordt door OutSystems.
-      </p>
-      <p>
-        Openstaande vraag: wat gebeurt er nog met die CSV nadat deze in MyPlantFloor wordt gestopt?
-      </p>
-    `
-  }
+  juoLocktBestelling: { match:["JUO lockt bestelling"], title:"JUO lockt bestelling", eyebrow:"JUO · betaling & ordercreatie", body:`<table class="modal-table"><thead><tr><th>Dag</th><th>Fase</th><th>Actie & status</th></tr></thead><tbody><tr><td>Dag T-6</td><td>Incasso start</td><td>JUO geeft Mollie de opdracht. Mollie schiet de incasso in bij de banken.<br><br>Shopify: Nog geen order zichtbaar.</td></tr><tr><td>Dag T-5</td><td>Verwerking</td><td>De bank van de klant verwerkt de afschrijving.<br><br>Status: De betaling staat bij Mollie op 'pending'.</td></tr><tr><td>Dag T-4</td><td>Settlement</td><td>Mollie ontvangt de bevestiging van de bank.<br><br>Status: Betaling springt op 'paid'.</td></tr><tr><td>Dag T-4</td><td>Ordercreatie</td><td>JUO ontvangt het signaal "Betaald" en maakt de order aan in Shopify.<br><br>Shopify: De order verschijnt nu pas als 'Paid'.</td></tr></tbody></table>` },
+  abonnementBeheren: { match:["Abonnement beheren"], title:"Abonnement beheren", eyebrow:"Shopify + JUO", body:`<p>In eerste instantie zal dit gaan via de native JUO module, met toevoegingen van recepten en boxinhoud.</p>` },
+  shopifyRegistreertOrder: { match:["Shopify registreert order"], title:"Shopify registreert order", eyebrow:"Shopify + JUO", body:`<p>Dit gebeurt pas wanneer Mollie een definitieve betaling binnenkrijgt.</p><p>In de meeste gevallen is dat ongeveer twee dagen na het locken van de order.</p>` },
+  outputDefinitieveOrderVoorOdoo: { match:["Output: definitieve order voor Odoo"], title:"Output: definitieve order voor Odoo", eyebrow:"Overdracht naar Odoo", body:`<p>Via de middleware wordt er een order aangemaakt in Odoo.</p>` },
+  boxBepalenPerWeek: { match:["Box bepalen per week"], title:"Box bepalen per week", eyebrow:"Odoo boxinhoud", body:`<p>Op welke manier deze producten worden ingericht is nog niet bekend.</p>` },
+  odooOntvangtOrder: { match:["Odoo ontvangt order"], title:"Odoo ontvangt order", eyebrow:"Odoo orderverwerking", body:`<p>Wat is de factuurstatus van deze order?</p><p>Is deze al betaald?</p><p>Hoe en waar verwerken we facturen van deze order?</p>` },
+  inputDefinitieveOrderShopifyJuo: { match:["Input: definitieve order uit Shopify/JUO"], title:"Input: definitieve order uit Shopify/JUO", eyebrow:"Open vraag · orderflow", body:`<p>Stel dat er een stonering plaatsvindt: waar en hoe wordt deze geregistreerd?</p>` },
+  definitieveVoorraadPrognoseAfboeken: { match:["Definitieve voorraad moet prognosevoorraad gaan afboeken"], title:"Definitieve voorraad moet prognosevoorraad gaan afboeken", eyebrow:"Odoo voorraadreservering", body:`<p>Definitieve orders moeten niet nieuwe inkoop voorraad gaan creëren, maar juist de voorraad van de prognose opslokken.</p>` },
+  outputDaadwerkelijkeOrders: { match:["Output: daadwerkelijke orders"], title:"Output: daadwerkelijke orders", eyebrow:"Odoo orderverwerking", body:`<p>Order bevestigen in Odoo? Automatisch?</p>` },
+  outputInstructiesIJsvogel: { match:["Output: instructies richting IJsVogel"], title:"Output: instructies richting IJsVogel", eyebrow:"Odoo productieplanning", body:`<p>Dit is een CSV zoals die nu ook gegenereerd wordt door OutSystems.</p><p>Openstaande vraag: wat gebeurt er nog met die CSV nadat deze in MyPlantFloor wordt gestopt?</p>` }
 };
 
-function getModalEntryForNodeText(text) {
-  return Object.entries(modalContent).find(([, entry]) =>
-    entry.match.every((part) => text.includes(part))
-  );
-}
+function getModalEntryForNodeText(text){return Object.entries(modalContent).find(([,entry])=>entry.match.every((part)=>text.includes(part)));}
+function addClickableNodeIcon(node){if(node.querySelector(".node-detail-icon")) return; const bbox=node.getBBox(); const icon=document.createElementNS("http://www.w3.org/2000/svg","g"); icon.setAttribute("class","node-detail-icon"); icon.setAttribute("transform",`translate(${bbox.x+bbox.width-30}, ${bbox.y+8})`); icon.setAttribute("pointer-events","none"); const ring=document.createElementNS("http://www.w3.org/2000/svg","circle"); ring.setAttribute("cx","10");ring.setAttribute("cy","10");ring.setAttribute("r","10");ring.setAttribute("fill","#FFFFEF");ring.setAttribute("stroke","#3C332F");ring.setAttribute("stroke-width","1.5"); const circle=document.createElementNS("http://www.w3.org/2000/svg","circle"); circle.setAttribute("cx","10");circle.setAttribute("cy","10");circle.setAttribute("r","7.5");circle.setAttribute("fill","#E0A69F"); const t=document.createElementNS("http://www.w3.org/2000/svg","text"); t.setAttribute("x","10");t.setAttribute("y","13.5");t.setAttribute("text-anchor","middle");t.setAttribute("font-size","12");t.setAttribute("font-weight","900");t.setAttribute("fill","#3C332F");t.textContent="i"; icon.appendChild(ring);icon.appendChild(circle);icon.appendChild(t);node.appendChild(icon);}
+function bindClickableDiagramNodes(activePanel){if(!activePanel)return; const nodes=activePanel.querySelectorAll(".mermaid-output g.node"); nodes.forEach((node)=>{if(node.dataset.modalBound==="true")return; const nodeText=(node.textContent||"").replace(/\s+/g," ").trim(); const found=getModalEntryForNodeText(nodeText); if(!found)return; const [modalId,entry]=found; node.dataset.modalBound="true"; node.style.cursor="pointer"; node.setAttribute("tabindex","0"); node.setAttribute("role","button"); node.setAttribute("aria-label",`Open details over ${entry.title}`); addClickableNodeIcon(node); node.addEventListener("click",()=>window.openNodeModal(modalId)); node.addEventListener("keydown",(event)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();window.openNodeModal(modalId);}});});}
+window.openNodeModal=function(id){const c=modalContent[id]; if(!c)return; document.querySelector(".modal-eyebrow").textContent=c.eyebrow||"Detail"; document.querySelector(".modal-title").textContent=c.title; document.querySelector(".modal-body").innerHTML=c.body; const modal=document.querySelector(".modal"); modal.hidden=false; modal.classList.add("active"); document.body.classList.add("modal-open"); document.querySelector(".modal-close").focus();};
+window.closeNodeModal=function(){const modal=document.querySelector(".modal"); modal.classList.remove("active"); modal.hidden=true; document.body.classList.remove("modal-open");};
 
-function addClickableNodeIcon(node) {
-  if (node.querySelector(".node-detail-icon")) return;
-
-  const bbox = node.getBBox();
-  const icon = document.createElementNS("http://www.w3.org/2000/svg", "g");
-  icon.setAttribute("class", "node-detail-icon");
-  icon.setAttribute("transform", `translate(${bbox.x + bbox.width - 30}, ${bbox.y + 8})`);
-  icon.setAttribute("pointer-events", "none");
-
-  const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  ring.setAttribute("cx", "10");
-  ring.setAttribute("cy", "10");
-  ring.setAttribute("r", "10");
-  ring.setAttribute("fill", "#FFFFEF");
-  ring.setAttribute("stroke", "#3C332F");
-  ring.setAttribute("stroke-width", "1.5");
-  ring.setAttribute("opacity", "0.98");
-
-  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  circle.setAttribute("cx", "10");
-  circle.setAttribute("cy", "10");
-  circle.setAttribute("r", "7.5");
-  circle.setAttribute("fill", "#E0A69F");
-
-  const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  text.setAttribute("x", "10");
-  text.setAttribute("y", "13.5");
-  text.setAttribute("text-anchor", "middle");
-  text.setAttribute("font-size", "12");
-  text.setAttribute("font-weight", "900");
-  text.setAttribute("fill", "#3C332F");
-  text.textContent = "i";
-
-  icon.appendChild(ring);
-  icon.appendChild(circle);
-  icon.appendChild(text);
-  node.appendChild(icon);
-}
-
-function bindClickableDiagramNodes(activePanel) {
-  if (!activePanel) return;
-
-  const nodes = activePanel.querySelectorAll(".mermaid-output g.node");
-  nodes.forEach((node) => {
-    if (node.dataset.modalBound === "true") return;
-
-    const nodeText = (node.textContent || "").replace(/\s+/g, " ").trim();
-    const found = getModalEntryForNodeText(nodeText);
-    if (!found) return;
-
-    const [modalId, entry] = found;
-
-    node.dataset.modalBound = "true";
-    node.style.cursor = "pointer";
-    node.setAttribute("tabindex", "0");
-    node.setAttribute("role", "button");
-    node.setAttribute("aria-label", `Open details over ${entry.title}`);
-    addClickableNodeIcon(node);
-
-    node.addEventListener("click", () => window.openNodeModal(modalId));
-    node.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        window.openNodeModal(modalId);
-      }
-    });
-  });
-}
-
-window.openNodeModal = function (id) {
-  const content = modalContent[id];
-  if (!content) return;
-
-  document.querySelector(".modal-eyebrow").textContent = content.eyebrow || "Detail";
-  document.querySelector(".modal-title").textContent = content.title;
-  document.querySelector(".modal-body").innerHTML = content.body;
-
-  const modal = document.querySelector(".modal");
-  modal.hidden = false;
-  modal.classList.add("active");
-  document.body.classList.add("modal-open");
-  document.querySelector(".modal-close").focus();
-};
-
-window.closeNodeModal = function () {
-  const modal = document.querySelector(".modal");
-  modal.classList.remove("active");
-  modal.hidden = true;
-  document.body.classList.remove("modal-open");
-};
-
-
-async function renderActiveDiagram(){
-  const activePanel=document.querySelector(".tab-panel.active");
-  if(!activePanel) return;
-  const container=activePanel.querySelector(".mermaid-output");
-  const source=activePanel.querySelector(".mermaid-source");
-  if(!container||!source) return;
-  if(container.dataset.rendered==="true") return;
-  const diagramId="diagram-"+activePanel.id;
-  const {svg}=await mermaid.render(diagramId, source.textContent.trim());
-  container.innerHTML=svg; container.dataset.rendered="true"; bindClickableDiagramNodes(activePanel);
-}
-window.addEventListener("DOMContentLoaded", async()=>{
-  const tabs=document.querySelectorAll("[data-tab]");
-  const panels=document.querySelectorAll(".tab-panel");
-  document.querySelector(".modal-close").addEventListener("click", window.closeNodeModal);
-  document.querySelector(".modal-backdrop").addEventListener("click", window.closeNodeModal);
-  document.addEventListener("keydown", (event)=>{ if(event.key==="Escape") window.closeNodeModal(); });
-  tabs.forEach(tab=>tab.addEventListener("click", async()=>{
-    const target=tab.dataset.tab;
-    tabs.forEach(t=>{t.classList.remove("active");t.setAttribute("aria-selected","false");});
-    panels.forEach(panel=>{panel.classList.remove("active");panel.hidden=true;});
-    tab.classList.add("active"); tab.setAttribute("aria-selected","true");
-    const panel=document.getElementById(target); panel.hidden=false; panel.classList.add("active");
-    await renderActiveDiagram();
-  }));
-  await renderActiveDiagram();
-});
+async function renderActiveDiagram(){const activePanel=document.querySelector(".tab-panel.active"); if(!activePanel)return; const container=activePanel.querySelector(".mermaid-output"); const source=activePanel.querySelector(".mermaid-source"); if(!container||!source)return; if(container.dataset.rendered==="true"){bindClickableDiagramNodes(activePanel);return;} const diagramId="diagram-"+activePanel.id; const {svg}=await mermaid.render(diagramId, source.textContent.trim()); container.innerHTML=svg; container.dataset.rendered="true"; bindClickableDiagramNodes(activePanel);}
+window.addEventListener("DOMContentLoaded", async()=>{const tabs=document.querySelectorAll("[data-tab]"); const panels=document.querySelectorAll(".tab-panel"); document.querySelector(".modal-close").addEventListener("click",window.closeNodeModal); document.querySelector(".modal-backdrop").addEventListener("click",window.closeNodeModal); document.addEventListener("keydown",(event)=>{if(event.key==="Escape")window.closeNodeModal();});
+const checklistItems=document.querySelectorAll("[data-checklist-item]"); const progressLabel=document.getElementById("test-progress-label"); const progressBar=document.getElementById("test-progress-bar"); const resetTestsButton=document.getElementById("reset-tests");
+function updateChecklistProgress(){if(!checklistItems.length||!progressLabel||!progressBar)return; const checked=Array.from(checklistItems).filter((item)=>item.checked).length; const total=checklistItems.length; const percentage=total?Math.round((checked/total)*100):0; progressLabel.textContent=`${checked} van ${total} tests afgevinkt`; progressBar.style.width=`${percentage}%`;}
+checklistItems.forEach((item)=>{item.checked=localStorage.getItem(`boerschappen-b2c-${item.id}`)==="true"; item.addEventListener("change",()=>{localStorage.setItem(`boerschappen-b2c-${item.id}`, item.checked ? "true":"false"); updateChecklistProgress();});});
+if(resetTestsButton) resetTestsButton.addEventListener("click",()=>{checklistItems.forEach((item)=>{item.checked=false; localStorage.removeItem(`boerschappen-b2c-${item.id}`);}); updateChecklistProgress();});
+updateChecklistProgress();
+tabs.forEach((tab)=>tab.addEventListener("click",async()=>{const target=tab.dataset.tab; tabs.forEach((t)=>{t.classList.remove("active");t.setAttribute("aria-selected","false");}); panels.forEach((panel)=>{panel.classList.remove("active");panel.hidden=true;}); tab.classList.add("active"); tab.setAttribute("aria-selected","true"); const panel=document.getElementById(target); panel.hidden=false; panel.classList.add("active"); await renderActiveDiagram();})); await renderActiveDiagram();});
 </script>
 <style>
-:root{--bodem:#3C332F;--fauna:#E0A69F;--flora:#80885E;--zand:#FFFFEF;--wit:#FFFFFF;--groen-licht:#DCEBCF;--groen:#A4B08B;--groen-donker:#505A3D;--roze-licht:#FFDCB8;--radius:16px;--shadow:0 12px 32px rgba(60,51,47,.08);}
-*{box-sizing:border-box} body{margin:0;color:var(--bodem);background:linear-gradient(180deg,var(--zand),#fff);font-family:Inter,Outfit,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
-.page{width:min(1320px,calc(100vw - 32px));margin:0 auto;padding:32px 0 56px} header{display:grid;gap:12px;margin-bottom:24px}
-.eyebrow{color:var(--flora);font-size:14px;font-weight:700;letter-spacing:.03em;text-transform:uppercase} h1{margin:0;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.04em}
-.intro{max-width:980px;margin:0;color:rgba(60,51,47,.78);font-size:17px} .tabs{display:flex;flex-wrap:wrap;gap:8px;padding:8px;margin:24px 0;background:rgba(255,255,255,.74);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);position:sticky;top:12px;z-index:10;backdrop-filter:blur(10px)}
-.tab{appearance:none;border:0;border-radius:999px;padding:10px 14px;color:var(--bodem);background:transparent;cursor:pointer;font:inherit;font-weight:700;font-size:14px;transition:background .15s ease,transform .15s ease} .tab:hover{background:var(--groen-licht);transform:translateY(-1px)} .tab.active{color:var(--zand);background:var(--groen-donker)}
-.tab-panel{display:none} .tab-panel.active{display:grid;gap:18px} .card{background:var(--wit);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);overflow:hidden}
-.card-header{display:grid;gap:8px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:rgba(220,235,207,.38)} h2{margin:0;font-size:clamp(24px,3vw,36px);letter-spacing:-.03em;line-height:1.1} .card-header p{margin:0;color:rgba(60,51,47,.74)}
-.diagram-wrap{width:100%;overflow:auto;padding:24px;background:radial-gradient(circle at 20px 20px,rgba(128,136,94,.08) 2px,transparent 0) 0 0/28px 28px,#fff} .mermaid-output{min-width:880px} .notes{display:grid;gap:12px;padding:20px 24px 24px;background:#fff} .notes h3{margin:0;font-size:18px} .notes ul{margin:0;padding-left:18px;color:rgba(60,51,47,.82)} .notes li+li{margin-top:6px} .open-point{padding:14px 16px;border-radius:var(--radius);background:var(--roze-licht);font-weight:650} .mermaid-source{display:none} footer{margin-top:28px;color:rgba(60,51,47,.55);font-size:13px}
-
-
-
-body.modal-open{overflow:hidden}
-.modal[hidden]{display:none}
-.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px}
-.modal-backdrop{position:absolute;inset:0;background:rgba(60,51,47,.44);backdrop-filter:blur(4px)}
-.modal-card{position:relative;width:min(720px,calc(100vw - 32px));max-height:calc(100vh - 48px);overflow:auto;background:var(--zand);border:1px solid rgba(60,51,47,.12);border-radius:24px;box-shadow:0 24px 80px rgba(60,51,47,.22)}
-.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.1);background:#fff}
-.modal-heading{display:grid;gap:6px}
-.modal-eyebrow{color:var(--flora);font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}
-.modal-title{margin:0;font-size:28px;line-height:1.1;letter-spacing:-.03em}
-.modal-close{appearance:none;border:0;border-radius:999px;width:40px;height:40px;background:var(--groen-donker);color:var(--zand);font-size:24px;line-height:1;cursor:pointer}
-.modal-close:hover{background:var(--bodem)}
-.modal-body{padding:22px 24px;color:rgba(60,51,47,.84)}
-.modal-body p{margin:0 0 14px}
-.modal-body p:last-child{margin-bottom:0}
-.mermaid-output g.node[role="button"]:hover rect,
-.mermaid-output g.node[role="button"]:focus rect,
-.mermaid-output g.node[role="button"]:focus-visible rect{
-  filter: drop-shadow(0 8px 14px rgba(60,51,47,.18));
-  stroke-width: 3px !important;
-}
-
-
-.node-detail-icon{
-  filter: drop-shadow(0 3px 5px rgba(60,51,47,.28));
-}
-.mermaid-output g.node[role="button"]:hover .node-detail-icon circle:first-child,
-.mermaid-output g.node[role="button"]:focus .node-detail-icon circle:first-child{
-  stroke-width: 2.5px;
-}
-
-
-.modal-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.modal-table th,
-.modal-table td {
-  padding: 12px;
-  border-bottom: 1px solid rgba(60, 51, 47, 0.14);
-  text-align: left;
-  vertical-align: top;
-}
-
-.modal-table th {
-  background: #DCEBCF;
-  color: #3C332F;
-  font-weight: 800;
-}
-
-.modal-table td:first-child {
-  white-space: nowrap;
-  font-weight: 700;
-}
-
-</style>
-</head>
-<body>
-<main class="page">
-<header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.3.8</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen. Deze versie scheidt de prognosegedreven keten van de daadwerkelijke orderketen. Odoo bepaalt eerst boxinhoud, receptuur en prognosebehoefte. Shopify + JUO initiëren later de klantorders. Orders slokken uiteindelijk de prognosevoorraad op.</p></header>
-<nav class="tabs" role="tablist" aria-label="B2C keten diagrammen"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button>
-<button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button>
-<button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button>
-<button class="tab " data-tab="orderverwerking" role="tab" aria-selected="false">3. Odoo order</button>
-<button class="tab " data-tab="prognoseinkoop" role="tab" aria-selected="false">4. Prognose & inkoop</button>
-<button class="tab " data-tab="voorraadreservering" role="tab" aria-selected="false">5. Voorraadreservering</button>
-<button class="tab " data-tab="productieplanning" role="tab" aria-selected="false">6. Productieplanning</button>
-<button class="tab " data-tab="ijsvogel" role="tab" aria-selected="false">7. IJsVogel</button>
-<button class="tab " data-tab="terugkoppeling" role="tab" aria-selected="false">8. Odoo terugkoppeling</button>
-<button class="tab " data-tab="lastmile" role="tab" aria-selected="false">9. Last mile</button></nav>
-<section id="overview" class="tab-panel active" role="tabpanel" >
-  <article class="card">
-    <div class="card-header"><h2>Overkoepelende volgorde</h2><p>Prognoseflow en daadwerkelijke orderflow naast elkaar, maar logisch opvolgend.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart LR
+:root{--bodem:#3C332F;--fauna:#E0A69F;--flora:#80885E;--zand:#FFFFEF;--wit:#FFFFFF;--groen-licht:#DCEBCF;--groen:#A4B08B;--groen-donker:#505A3D;--roze-licht:#FFDCB8;--radius:16px;--shadow:0 12px 32px rgba(60,51,47,.08)}*{box-sizing:border-box}body{margin:0;color:var(--bodem);background:linear-gradient(180deg,var(--zand),#fff);font-family:Inter,Outfit,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}.page{width:min(1320px,calc(100vw - 32px));margin:0 auto;padding:32px 0 56px}header{display:grid;gap:12px;margin-bottom:24px}.eyebrow{color:var(--flora);font-size:14px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}h1{margin:0;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.04em}.intro{max-width:980px;margin:0;color:rgba(60,51,47,.78);font-size:17px}.tabs{display:flex;flex-wrap:wrap;gap:8px;padding:8px;margin:24px 0;background:rgba(255,255,255,.74);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);position:sticky;top:12px;z-index:10;backdrop-filter:blur(10px)}.tab{appearance:none;border:0;border-radius:999px;padding:10px 14px;color:var(--bodem);background:transparent;cursor:pointer;font:inherit;font-weight:700;font-size:14px}.tab:hover{background:var(--groen-licht)}.tab.active{color:var(--zand);background:var(--groen-donker)}.tab-panel{display:none}.tab-panel.active{display:grid;gap:18px}.card{background:var(--wit);border:1px solid rgba(60,51,47,.08);border-radius:calc(var(--radius) + 8px);box-shadow:var(--shadow);overflow:hidden}.card-header{display:grid;gap:8px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:rgba(220,235,207,.38)}h2{margin:0;font-size:clamp(24px,3vw,36px);letter-spacing:-.03em;line-height:1.1}.card-header p{margin:0;color:rgba(60,51,47,.74)}.diagram-wrap{width:100%;overflow:auto;padding:24px;background:radial-gradient(circle at 20px 20px,rgba(128,136,94,.08) 2px,transparent 0) 0 0/28px 28px,#fff}.mermaid-output{min-width:880px}.notes{display:grid;gap:12px;padding:20px 24px 24px;background:#fff}.notes h3{margin:0;font-size:18px}.notes ul{margin:0;padding-left:18px;color:rgba(60,51,47,.82)}.mermaid-source{display:none}footer{margin-top:28px;color:rgba(60,51,47,.55);font-size:13px}
+body.modal-open{overflow:hidden}.modal[hidden]{display:none}.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px}.modal-backdrop{position:absolute;inset:0;background:rgba(60,51,47,.44);backdrop-filter:blur(4px)}.modal-card{position:relative;width:min(720px,calc(100vw - 32px));max-height:calc(100vh - 48px);overflow:auto;background:var(--zand);border:1px solid rgba(60,51,47,.12);border-radius:24px;box-shadow:0 24px 80px rgba(60,51,47,.22)}.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px;border-bottom:1px solid rgba(60,51,47,.1);background:#fff}.modal-heading{display:grid;gap:6px}.modal-eyebrow{color:var(--flora);font-size:13px;font-weight:800;letter-spacing:.03em;text-transform:uppercase}.modal-title{margin:0;font-size:28px;line-height:1.1;letter-spacing:-.03em}.modal-close{appearance:none;border:0;border-radius:999px;width:40px;height:40px;background:var(--groen-donker);color:var(--zand);font-size:24px;line-height:1;cursor:pointer}.modal-body{padding:22px 24px;color:rgba(60,51,47,.84)}.modal-body p{margin:0 0 14px}.node-detail-icon{filter:drop-shadow(0 3px 5px rgba(60,51,47,.28))}.mermaid-output g.node[role="button"]:hover rect{filter:drop-shadow(0 8px 14px rgba(60,51,47,.18));stroke-width:3px!important}.modal-table{width:100%;border-collapse:collapse;font-size:14px}.modal-table th,.modal-table td{padding:12px;border-bottom:1px solid rgba(60,51,47,.14);text-align:left;vertical-align:top}.modal-table th{background:#DCEBCF;color:#3C332F;font-weight:800}.modal-table td:first-child{white-space:nowrap;font-weight:700}
+.test-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(60,51,47,.08);background:#fff}.progress-track{width:min(420px,calc(100vw - 96px));height:10px;margin-top:8px;background:rgba(60,51,47,.10);border-radius:999px;overflow:hidden}.progress-bar{width:0;height:100%;background:#80885E;border-radius:999px;transition:width .18s ease}.reset-tests{appearance:none;border:0;border-radius:999px;padding:10px 14px;background:#FFDCB8;color:#3C332F;font:inherit;font-weight:800;cursor:pointer}.test-content{display:grid;gap:18px;padding:24px;background:#fff}.test-group{background:#FFFFEF;border:1px solid rgba(60,51,47,.10);border-radius:24px;overflow:hidden}.test-group-header{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:16px 18px;background:#DCEBCF;border-bottom:1px solid rgba(60,51,47,.08)}.test-group-header h3{margin:0;font-size:18px}.test-count{color:rgba(60,51,47,.68);font-size:13px;font-weight:800;white-space:nowrap}.test-list{display:grid}.test-item{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:16px 18px;cursor:pointer;border-bottom:1px solid rgba(60,51,47,.08)}.test-item:hover{background:rgba(255,220,184,.34)}.test-item input{width:20px;height:20px;margin-top:2px;accent-color:#80885E}.test-copy{display:grid;gap:4px}.test-title{font-weight:850;color:#3C332F}.test-meta{width:max-content;max-width:100%;padding:3px 8px;border-radius:999px;background:#fff;color:#505A3D;font-size:12px;font-weight:800}.test-desc{color:rgba(60,51,47,.74);font-size:14px}.test-item input:checked + .test-copy .test-title{text-decoration:line-through;color:rgba(60,51,47,.55)}.open-questions ul{margin:0;padding:18px 22px 18px 40px;color:rgba(60,51,47,.82)}.open-questions li+li{margin-top:8px}@media(max-width:720px){.page{width:min(100vw - 20px,1320px);padding-top:20px}.tabs{position:static}.tab{flex:1 1 auto}.test-toolbar{display:grid}.reset-tests{width:100%}}
+</style></head><body><main class="page"><header><div class="eyebrow">Boerschappen · B2C ketenflow · v0.4.0</div><h1>Van boxinhoud en prognose naar levering</h1><p class="intro">Losse diagrammen die elkaar logisch opvolgen, inclusief klikbare context-popups en afvinkbare testscenario’s.</p></header><nav class="tabs" role="tablist"><button class="tab active" data-tab="overview" role="tab" aria-selected="true">Overzicht</button><button class="tab " data-tab="boxinhoud" role="tab" aria-selected="false">1. Boxinhoud</button><button class="tab " data-tab="orderinitiatie" role="tab" aria-selected="false">2. Shopify + JUO</button><button class="tab " data-tab="orderverwerking" role="tab" aria-selected="false">3. Odoo order</button><button class="tab " data-tab="prognoseinkoop" role="tab" aria-selected="false">4. Prognose & inkoop</button><button class="tab " data-tab="voorraadreservering" role="tab" aria-selected="false">5. Voorraadreservering</button><button class="tab " data-tab="productieplanning" role="tab" aria-selected="false">6. Productieplanning</button><button class="tab " data-tab="ijsvogel" role="tab" aria-selected="false">7. IJsVogel</button><button class="tab " data-tab="terugkoppeling" role="tab" aria-selected="false">8. Odoo terugkoppeling</button><button class="tab " data-tab="lastmile" role="tab" aria-selected="false">9. Last mile</button><button class="tab" data-tab="testscenarios" role="tab" aria-selected="false">Testscenario’s</button></nav><section id="overview" class="tab-panel active" role="tabpanel" ><article class="card"><div class="card-header"><h2>Overzicht — overkoepelende volgorde</h2><p>De complete B2C-keten in één compacte lijn.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart LR
   A["1. Odoo<br/>Boxinhoud & recepten"] --> B["4. Odoo<br/>Prognosemodule & inkoop"]
   C["2. Shopify + JUO<br/>Orderinitiatie"] --> D["3. Odoo<br/>Orderverwerking"]
   A --> D
@@ -406,19 +44,7 @@ body.modal-open{overflow:hidden}
   E --> F["6. Odoo<br/>Productieplanning"]
   F --> G["7. IJsVogel<br/>Boxen vullen"]
   G --> H["8. Odoo<br/>Terugkoppeling"]
-  H --> I["9. Last mile<br/>Levering"]</pre></div>
-    <div class="notes"><h3>Kernwijzigingen in v0.2</h3><ul>
-<li>Boxinhoud en receptbepaling staan vóór de orderflow.</li>
-<li>Inkoop start in eerste instantie vanuit een prognosemodule, niet direct vanuit orders.</li>
-<li>Orders slokken uiteindelijk de beschikbare prognosevoorraad op.</li>
-<li>Odoo-orderregels bevatten het daadwerkelijke product op de orderregel, dus de box als product, niet per se een concrete boxvariant.</li>
-<li>Leverweek is aangepast naar leverdatum/productiedag waar relevant.</li>
-</ul></div>
-  </article>
-</section><section id="boxinhoud" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>1. Odoo — boxinhoud & receptbepaling</h2><p>Van culinaire planning naar boxinhoud, recepten, SKU’s en basis voor prognose.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  H --> I["9. Last mile<br/>Levering"]</pre></div><div class="notes"><h3>Kernlogica</h3><ul><li>Odoo bepaalt boxinhoud, prognose en operatie.</li><li>Shopify + JUO initiëren klantorders.</li><li>IJsVogel vult de boxen en last mile levert uit.</li></ul></div></article></section><section id="boxinhoud" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>1. Odoo — boxinhoud & receptbepaling</h2><p>Van culinaire planning naar boxinhoud, recepten, SKU’s en basis voor prognose.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Start: culinaire / commerciële planning"] --> B["Odoo Culinair / boxconfiguratie"]
   B --> C["Box bepalen per week"]
   C --> E["Recept maken op basis van ingrediënten"]
@@ -432,17 +58,7 @@ body.modal-open{overflow:hidden}
   K --> L["Output naar prognosemodule:<br/>SKU's, hoeveelheden, productiedag"]
   K --> M["Output naar orderverwerking:<br/>boxproduct / productcontext"]
   K --> O["Output naar Shopify/JUO:<br/>recepten en boxinhoud"]
-  K --> N["Open punt:<br/>variantkoppeling per week/dag nog te bepalen"]</pre></div>
-    <div class="notes"><h3>Belangrijk</h3><ul>
-<li>Deze stap is naar voren gehaald en is nu stap 1.</li>
-<li>Variantkoppeling in Odoo is nog niet concreet genoeg en moet met het team worden besproken.</li>
-<li>De output voedt zowel prognose/inkoop als latere orderverwerking.</li>
-</ul><div class="open-point">Open teamvraag: hoe koppelen we boxvariant, week/dag en het daadwerkelijke boxproduct technisch en functioneel in Odoo?</div></div>
-  </article>
-</section><section id="orderinitiatie" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>2. Shopify + JUO — orderinitiatie</h2><p>Van klantkeuze en abonnementslogica naar definitieve order voor Odoo.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  K --> N["Open punt:<br/>variantkoppeling per week/dag nog te bepalen"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="orderinitiatie" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>2. Shopify + JUO — orderinitiatie</h2><p>Van klantkeuze en abonnementslogica naar definitieve order voor Odoo.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Klant"] --> B["Shopify webshop"]
   B --> C["Box / abonnement kiezen"]
   C --> D["JUO subscription module"]
@@ -462,13 +78,7 @@ body.modal-open{overflow:hidden}
   G -- "Ja" --> H["JUO lockt bestelling"]
   H --> I["JUO genereert definitieve abonnementsorder"]
   I --> J["Shopify registreert order"]
-  J --> L["Output: definitieve order voor Odoo"]</pre></div>
-    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
-  </article>
-</section><section id="orderverwerking" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>3. Odoo — orderverwerking</h2><p>Van definitieve order naar operationele order voor voorraadconsumptie en labelgeneratie.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  J --> L["Output: definitieve order voor Odoo"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="orderverwerking" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>3. Odoo — orderverwerking</h2><p>Van definitieve order naar operationele order voor voorraadconsumptie en labelgeneratie.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: definitieve order uit Shopify/JUO"] --> B["Odoo ontvangt order"]
   B --> C{"Consument al bekend in Odoo?"}
   C -- "Nee" --> D["Klant / consument aanmaken"]
@@ -490,18 +100,7 @@ body.modal-open{overflow:hidden}
   M --> P["Output: daadwerkelijke orders"]
   N --> P
   O --> P
-  P --> Q["Open punt:<br/>variantkoppeling per week/dag nog bespreken"]</pre></div>
-    <div class="notes"><h3>Aangepast</h3><ul>
-<li>Niet meer “boxvariant” als vaste orderkoppeling noemen.</li>
-<li>In Odoo komt op de orderregel het daadwerkelijke product te staan, bijvoorbeeld de box als product.</li>
-<li>Leverweek is hier aangepast naar leverdatum.</li>
-<li>Deze daadwerkelijke orders zijn deels nodig voor labelgeneratie per last mile en deels om prognosevoorraad op te slokken.</li>
-</ul></div>
-  </article>
-</section><section id="prognoseinkoop" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>4. Odoo — prognosemodule & inkoop</h2><p>Inkoop start op basis van prognose, niet rechtstreeks op basis van definitieve orders.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  P --> Q["Open punt:<br/>variantkoppeling per week/dag nog bespreken"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="prognoseinkoop" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>4. Odoo — prognosemodule & inkoop</h2><p>Inkoop start op basis van prognose, niet rechtstreeks op basis van definitieve orders.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: boxinhoud, SKU's, hoeveelheden en productiedag"] --> B["Odoo prognosemodule"]
   B --> C["Prognosebehoefte bepalen"]
   C --> D["Benodigde producten per productiedag"]
@@ -517,17 +116,7 @@ body.modal-open{overflow:hidden}
   M --> N["Ontvangst registreren in Odoo"]
   N --> O["Voorraad beschikbaar voor productiedag"]
   H --> P["Output: prognosevoorraad beschikbaar"]
-  O --> P</pre></div>
-    <div class="notes"><h3>Aangepast</h3><ul>
-<li>“Benodigde producten per leverweek” is vervangen door “benodigde producten per productiedag”.</li>
-<li>De inkoopflow draait in eerste instantie op een prognosemodule.</li>
-<li>Deze prognosemodule is nog niet direct ordergedreven.</li>
-</ul></div>
-  </article>
-</section><section id="voorraadreservering" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>5. Odoo — voorraadreservering per productiedag</h2><p>Beschikbare prognosevoorraad wordt gereserveerd en later opgeslokt door daadwerkelijke orders.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  O --> P</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="voorraadreservering" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>5. Odoo — voorraadreservering per productiedag</h2><p>Beschikbare prognosevoorraad wordt gereserveerd en later opgeslokt door daadwerkelijke orders.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: prognosevoorraad beschikbaar"] --> B["Voorraad koppelen aan productiedag"]
   C["Input: daadwerkelijke orders"] --> D["Ordervraag per leverdatum/productiedag bepalen"]
   B --> E["Voorraadreservering maken voor productiedag"]
@@ -541,17 +130,7 @@ body.modal-open{overflow:hidden}
   J -- "Ja" --> L["Voorraad vrijgeven voor productieplanning"]
   K --> M["Aanvullen, vervangen of corrigeren"]
   M --> I
-  L --> N["Output: beschikbare en gereserveerde producten voor productie"]</pre></div>
-    <div class="notes"><h3>Nieuwe stap</h3><ul>
-<li>Er moet een reservering komen voor voorraad op de beschikbare productiedag.</li>
-<li>Werkelijke orders moeten de prognosevoorraad uiteindelijk consumeren.</li>
-<li>Deze stap vormt de brug tussen prognosegedreven inkoop en ordergedreven productie/labeling.</li>
-</ul></div>
-  </article>
-</section><section id="productieplanning" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>6. Odoo — productieplanning</h2><p>Van gereserveerde voorraad en daadwerkelijke orders naar instructies voor IJsVogel.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  L --> N["Output: beschikbare en gereserveerde producten voor productie"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="productieplanning" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>6. Odoo — productieplanning</h2><p>Van gereserveerde voorraad en daadwerkelijke orders naar instructies voor IJsVogel.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: daadwerkelijke orders"] --> B["Odoo productieplanning"]
   C["Input: gereserveerde voorraad per productiedag"] --> B
   B --> D["Aantallen per boxproduct bepalen"]
@@ -564,13 +143,7 @@ body.modal-open{overflow:hidden}
   J -- "Nee" --> K["Afwijking / tekort signaleren"]
   K --> B
   J -- "Ja" --> L["Productieplanning vrijgeven"]
-  L --> M["Output: instructies richting IJsVogel"]</pre></div>
-    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
-  </article>
-</section><section id="ijsvogel" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>7. IJsVogel — boxen vullen & klaarzetten</h2><p>De fysieke operatie: boxen vullen met de juiste producten en hoeveelheden.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  L --> M["Output: instructies richting IJsVogel"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="ijsvogel" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>7. IJsVogel — boxen vullen & klaarzetten</h2><p>De fysieke operatie: boxen vullen met de juiste producten en hoeveelheden.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: vulinstructies uit Odoo"] --> B["IJsVogel operatie"]
   B --> C["Producten klaarzetten"]
   C --> D["Producten verzamelen per boxproduct / boxvariant indien bekend"]
@@ -584,13 +157,7 @@ body.modal-open{overflow:hidden}
   I -- "Ja" --> K["Box gereedmelden"]
   K --> L["Boxen sorteren voor levering / pickup"]
   L --> M["Boxen klaarzetten voor overdracht"]
-  M --> N["Output: gereedmelding en eventuele afwijkingen"]</pre></div>
-    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
-  </article>
-</section><section id="terugkoppeling" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>8. Odoo — operationele terugkoppeling</h2><p>Van gereedmelding en afwijkingen naar orders klaar voor last mile.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  M --> N["Output: gereedmelding en eventuele afwijkingen"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="terugkoppeling" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>8. Odoo — operationele terugkoppeling</h2><p>Van gereedmelding en afwijkingen naar orders klaar voor last mile.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: gereedmelding / afwijkingen uit IJsVogel"] --> B["Odoo operationele verwerking"]
   B --> C["Productie gereed verwerken"]
   C --> D["Fulfillmentstatus bijwerken"]
@@ -601,13 +168,7 @@ body.modal-open{overflow:hidden}
   H --> B
   G -- "Ja" --> I["Order markeren als klaar voor transport"]
   I --> J["Leverinformatie beschikbaar maken"]
-  J --> K["Output: orders klaar voor last mile en labelgeneratie"]</pre></div>
-    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
-  </article>
-</section><section id="lastmile" class="tab-panel " role="tabpanel" hidden>
-  <article class="card">
-    <div class="card-header"><h2>9. Last mile & levering</h2><p>Van orders klaar voor last mile naar daadwerkelijke levering bij de klant.</p></div>
-    <div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
+  J --> K["Output: orders klaar voor last mile en labelgeneratie"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="lastmile" class="tab-panel " role="tabpanel" hidden><article class="card"><div class="card-header"><h2>9. Last mile & levering</h2><p>Van orders klaar voor last mile naar daadwerkelijke levering bij de klant.</p></div><div class="diagram-wrap"><div class="mermaid-output"></div><pre class="mermaid-source">flowchart TD
   A["Input: orders klaar voor last mile"] --> B["Last mile systeem / transportoperatie"]
   B --> C["Labels / leverinformatie gebruiken"]
   C --> D["Routes plannen"]
@@ -620,27 +181,4 @@ body.modal-open{overflow:hidden}
   J --> K["Orderstatus / opvolging bijwerken"]
   H --> L["Klant ontvangt box"]
   L --> M["Levering afgerond"]
-  M --> N["Eventuele status terug naar klantomgeving"]</pre></div>
-    <div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div>
-  </article>
-</section>
-
-
-<div class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
-  <div class="modal-backdrop" aria-hidden="true"></div>
-  <article class="modal-card">
-    <header class="modal-header">
-      <div class="modal-heading">
-        <div class="modal-eyebrow">Detail</div>
-        <h2 id="modal-title" class="modal-title">Titel</h2>
-      </div>
-      <button class="modal-close" type="button" aria-label="Sluit popup">×</button>
-    </header>
-    <div class="modal-body"></div>
-  </article>
-</div>
-
-<footer>Versie 0.3.8 · Werkdocument voor Boerschappen B2C ketenflow · Variantkoppeling per week/dag is bewust als open punt opgenomen.</footer>
-</main>
-</body>
-</html>
+  M --> N["Eventuele status terug naar klantomgeving"]</pre></div><div class="notes"><h3>Output</h3><ul><li>Zie diagram voor input, verwerking en output naar de volgende stap.</li></ul></div></article></section><section id="testscenarios" class="tab-panel" role="tabpanel" hidden><article class="card"><div class="card-header"><h2>Testscenario’s — orderinitiatie tot levering</h2><p>Afvinkbare testset voor de end-to-end B2C-keten. De voortgang wordt lokaal opgeslagen in je browser.</p></div><div class="test-toolbar"><div><strong id="test-progress-label">0 van 0 tests afgevinkt</strong><div class="progress-track"><div class="progress-bar" id="test-progress-bar"></div></div></div><button class="reset-tests" type="button" id="reset-tests">Reset vinkjes</button></div><div class="test-content"><section class="test-group"><div class="test-group-header"><h3>Orderinitiatie in JUO / Shopify</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-01-klant-wijzigt-abonnement-v-r-deadline"><input id="test-01-klant-wijzigt-abonnement-v-r-deadline" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Klant wijzigt abonnement vóór deadline</span><span class="test-meta">JUO / Shopify</span><span class="test-desc">Box, levering, leverwijze, adres en add-ons kunnen vóór lockmoment worden gewijzigd.</span></span></label><label class="test-item" for="test-02-juo-lockt-bestelling"><input id="test-02-juo-lockt-bestelling" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">JUO lockt bestelling</span><span class="test-meta">JUO</span><span class="test-desc">Na lockmoment zijn klantwijzigingen niet meer toegestaan en blijft de data stabiel.</span></span></label><label class="test-item" for="test-03-incasso-en-ordercreatieflow"><input id="test-03-incasso-en-ordercreatieflow" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Incasso- en ordercreatieflow</span><span class="test-meta">JUO / Mollie / Shopify</span><span class="test-desc">Incasso en ordercreatie lopen volgens afgesproken flow.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Middleware / orderoverdracht naar Odoo</h3><span class="test-count">4 tests</span></div><div class="test-list"><label class="test-item" for="test-04-definitieve-order-wordt-naar-odoo-gestuurd"><input id="test-04-definitieve-order-wordt-naar-odoo-gestuurd" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Definitieve order wordt naar Odoo gestuurd</span><span class="test-meta">Shopify / JUO / Middleware / Odoo</span><span class="test-desc">Order wordt exact één keer aangemaakt en is herleidbaar.</span></span></label><label class="test-item" for="test-05-consument-bestaat-nog-niet-in-odoo"><input id="test-05-consument-bestaat-nog-niet-in-odoo" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Consument bestaat nog niet in Odoo</span><span class="test-meta">Middleware / Odoo</span><span class="test-desc">Nieuwe consument wordt aangemaakt en verkooporder wordt gekoppeld.</span></span></label><label class="test-item" for="test-06-consument-bestaat-al-in-odoo"><input id="test-06-consument-bestaat-al-in-odoo" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Consument bestaat al in Odoo</span><span class="test-meta">Middleware / Odoo</span><span class="test-desc">Bestaande consument wordt hergebruikt.</span></span></label><label class="test-item" for="test-07-verkooporder-bevat-alle-benodigde-data"><input id="test-07-verkooporder-bevat-alle-benodigde-data" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Verkooporder bevat alle benodigde data</span><span class="test-meta">Odoo</span><span class="test-desc">Product/orderregels, leverdatum, leverwijze, add-ons en referenties staan op de verkooporder.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Boxinhoud, recepten en publicatie</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-08-box-bepalen-per-week"><input id="test-08-box-bepalen-per-week" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Box bepalen per week</span><span class="test-meta">Odoo Culinair</span><span class="test-desc">Box wordt per week ingericht.</span></span></label><label class="test-item" for="test-09-recept-maken-op-basis-van-ingredi-nten"><input id="test-09-recept-maken-op-basis-van-ingredi-nten" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Recept maken op basis van ingrediënten</span><span class="test-meta">Odoo Culinair</span><span class="test-desc">Recept is bruikbaar voor stuklijst/productie.</span></span></label><label class="test-item" for="test-10-output-boxinhoud-naar-shopify-juo"><input id="test-10-output-boxinhoud-naar-shopify-juo" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Output boxinhoud naar Shopify/JUO</span><span class="test-meta">Odoo / Middleware / Shopify / JUO</span><span class="test-desc">Klant ziet juiste boxinhoud en recepten.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Prognose, inkoop en voorraad</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-11-prognosemodule-berekent-behoefte"><input id="test-11-prognosemodule-berekent-behoefte" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Prognosemodule berekent behoefte</span><span class="test-meta">Odoo Prognose</span><span class="test-desc">Benodigde producten per productiedag en aantallen per SKU worden berekend.</span></span></label><label class="test-item" for="test-12-prognose-leidt-tot-inkoop-rfq"><input id="test-12-prognose-leidt-tot-inkoop-rfq" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Prognose leidt tot inkoop/RFQ</span><span class="test-meta">Odoo Inkoop</span><span class="test-desc">RFQ/prognose en definitieve inkooporder zijn gescheiden.</span></span></label><label class="test-item" for="test-13-definitieve-orders-boeken-af-op-prognosevoorraad"><input id="test-13-definitieve-orders-boeken-af-op-prognosevoorraad" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Definitieve orders boeken af op prognosevoorraad</span><span class="test-meta">Odoo Voorraad / Sales / Productie</span><span class="test-desc">Definitieve orders slokken prognosevoorraad op.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Betaling, factuur en stornering</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-14-betaling-succesvol"><input id="test-14-betaling-succesvol" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Betaling succesvol</span><span class="test-meta">JUO / Mollie / Shopify / Odoo</span><span class="test-desc">Betaalstatus loopt correct door de keten.</span></span></label><label class="test-item" for="test-15-betaling-mislukt-of-blijft-pending"><input id="test-15-betaling-mislukt-of-blijft-pending" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Betaling mislukt of blijft pending</span><span class="test-meta">JUO / Mollie / Shopify / Odoo</span><span class="test-desc">Orderstatus, blokkade en opvolging zijn duidelijk.</span></span></label><label class="test-item" for="test-16-stornering-na-ordercreatie"><input id="test-16-stornering-na-ordercreatie" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Stornering na ordercreatie</span><span class="test-meta">Mollie / JUO / Shopify / Odoo / Finance</span><span class="test-desc">Stornering wordt geregistreerd op de afgesproken plek.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Productieplanning en IJsVogel / MyPlantFloor</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-17-productieplanning-maakt-instructies"><input id="test-17-productieplanning-maakt-instructies" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Productieplanning maakt instructies</span><span class="test-meta">Odoo Productieplanning</span><span class="test-desc">Aantallen per boxproduct/productiedag en producten per box kloppen.</span></span></label><label class="test-item" for="test-18-csv-richting-ijsvogel-myplantfloor"><input id="test-18-csv-richting-ijsvogel-myplantfloor" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">CSV richting IJsVogel/MyPlantFloor</span><span class="test-meta">Odoo / IJsVogel / MyPlantFloor</span><span class="test-desc">CSV bevat juiste velden en wordt geaccepteerd.</span></span></label><label class="test-item" for="test-19-ijsvogel-vult-boxen"><input id="test-19-ijsvogel-vult-boxen" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">IJsVogel vult boxen</span><span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span><span class="test-desc">Fysieke boxvulling sluit aan op digitale instructies.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Odoo terugkoppeling en fulfillment</h3><span class="test-count">2 tests</span></div><div class="test-list"><label class="test-item" for="test-20-gereedmelding-verwerken"><input id="test-20-gereedmelding-verwerken" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Gereedmelding verwerken</span><span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span><span class="test-desc">Productie gereed, fulfillmentstatus en voorraadmutaties worden verwerkt.</span></span></label><label class="test-item" for="test-21-afwijking-tijdens-vullen"><input id="test-21-afwijking-tijdens-vullen" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Afwijking tijdens vullen</span><span class="test-meta">IJsVogel / MyPlantFloor / Odoo</span><span class="test-desc">Afwijkingen blokkeren waar nodig en zijn opvolgbaar.</span></span></label></div></section><section class="test-group"><div class="test-group-header"><h3>Last mile en levering</h3><span class="test-count">3 tests</span></div><div class="test-list"><label class="test-item" for="test-22-labelgeneratie"><input id="test-22-labelgeneratie" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Labelgeneratie</span><span class="test-meta">Odoo / Last mile</span><span class="test-desc">Labels bevatten juiste klant-, lever- en boxinformatie.</span></span></label><label class="test-item" for="test-23-route-en-levering"><input id="test-23-route-en-levering" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Route en levering</span><span class="test-meta">Last mile / Odoo / klantomgeving</span><span class="test-desc">Route, levering en status afgerond werken correct.</span></span></label><label class="test-item" for="test-24-levering-mislukt"><input id="test-24-levering-mislukt" type="checkbox" data-checklist-item><span class="test-copy"><span class="test-title">Levering mislukt</span><span class="test-meta">Last mile / Odoo / klantenservice</span><span class="test-desc">Niet-geleverd wordt correct geregistreerd en opgevolgd.</span></span></label></div></section><section class="test-group open-questions"><div class="test-group-header"><h3>Open testvragen</h3><span class="test-count">6 vragen</span></div><ul><li>Wanneer ontstaat de Shopify-order definitief: bij lock, pending of paid?</li><li>Wordt de verkooporder in Odoo automatisch bevestigd?</li><li>Waar is factuurstatus leidend?</li><li>Waar registreren we storneringen en wat is de operationele impact?</li><li>Wat gebeurt er precies met de CSV in MyPlantFloor?</li><li>Hoe koppelen we box/week/boxproduct/variant in Odoo?</li></ul></section></div></article></section><div class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-backdrop" aria-hidden="true"></div><article class="modal-card"><header class="modal-header"><div class="modal-heading"><div class="modal-eyebrow">Detail</div><h2 id="modal-title" class="modal-title">Titel</h2></div><button class="modal-close" type="button" aria-label="Sluit popup">×</button></header><div class="modal-body"></div></article></div><footer>Versie 0.4.0 · Werkdocument voor Boerschappen B2C ketenflow.</footer></main></body></html>
